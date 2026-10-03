@@ -1,0 +1,2750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>THE INDIA</title>
+
+  <!-- Royal Decorative Serif & Clean UI Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Leaflet.js for Zoomable South Asia & Indian States Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    :root {
+      --navy-indigo: #000080;
+      --gold-peach: #E8A86B;
+      --white-soft: #fdf8f4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body, html {
+      width: 100%;
+      background-color: var(--navy-indigo);
+      color: var(--white-soft);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      border: none;
+      outline: none;
+    }
+
+    /* ================= PAGE 1: #000080 HERO (FADES OUT ON SCROLL) ================= */
+    .page-1-wrapper {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      pointer-events: none;
+    }
+
+    .page-1-hero {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: var(--navy-indigo);
+      z-index: 10;
+      border: none;
+      outline: none;
+      opacity: 1;
+      will-change: opacity, transform, filter;
+    }
+
+    .hero-bg-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%) scale(1.06);
+      object-fit: cover;
+      z-index: 1;
+      animation: videoSlowBreath 6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes videoSlowBreath {
+      0% { transform: translate(-50%, -50%) scale(1.12); }
+      100% { transform: translate(-50%, -50%) scale(1.0); }
+    }
+
+    .hero-mask-svg {
+      position: absolute;
+      inset: -2px;
+      width: calc(100% + 4px);
+      height: calc(100% + 4px);
+      z-index: 2;
+      display: block;
+      border: none;
+    }
+
+    /* ================= ULTRA-SMOOTH ONE-TIME "WELCOME TO" -> "THE INDIA" MORPH ================= */
+    .mask-stage-group {
+      transform-origin: 50% 50%;
+      transform-box: view-box;
+      will-change: opacity, transform, filter;
+    }
+
+    .welcome-stage {
+      opacity: 0;
+      animation: smoothWelcomeMorph 3.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+    }
+
+    @keyframes smoothWelcomeMorph {
+      0% {
+        opacity: 0;
+        transform: scale(0.84) translateY(18px);
+      }
+      26% {
+        opacity: 1;
+        transform: scale(1) translateY(0px);
+      }
+      64% {
+        opacity: 1;
+        transform: scale(1.04) translateY(0px);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.28) translateY(-10px);
+      }
+    }
+
+    .india-stage {
+      opacity: 0;
+      animation: smoothIndiaReveal 2.4s cubic-bezier(0.16, 1, 0.3, 1) 2.35s forwards;
+    }
+
+    @keyframes smoothIndiaReveal {
+      0% {
+        opacity: 0;
+        transform: scale(0.82) translateY(14px);
+      }
+      45% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0px);
+      }
+    }
+
+    .welcome-word {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 11.2vw;
+      font-weight: 900;
+      letter-spacing: 0.8vw;
+      text-anchor: middle;
+      dominant-baseline: central;
+      animation: welcomeTracking 3.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+    }
+
+    .to-word {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 4.4vw;
+      font-weight: 700;
+      letter-spacing: 1.6vw;
+      text-anchor: middle;
+      dominant-baseline: central;
+      animation: toTracking 3.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+    }
+
+    @keyframes welcomeTracking {
+      0% { letter-spacing: 0.3vw; }
+      60% { letter-spacing: 1.1vw; }
+      100% { letter-spacing: 2.2vw; }
+    }
+
+    @keyframes toTracking {
+      0% { letter-spacing: 1.0vw; }
+      60% { letter-spacing: 2.0vw; }
+      100% { letter-spacing: 3.4vw; }
+    }
+
+    .the-word {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 4vw;
+      font-weight: 700;
+      letter-spacing: 1.5vw;
+      text-anchor: middle;
+      animation: theTracking 2.4s cubic-bezier(0.16, 1, 0.3, 1) 2.35s forwards;
+    }
+
+    .india-word {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 22vw;
+      font-weight: 900;
+      letter-spacing: 0.5vw;
+      text-anchor: middle;
+      dominant-baseline: central;
+      animation: indiaTracking 2.4s cubic-bezier(0.16, 1, 0.3, 1) 2.35s forwards;
+    }
+
+    @keyframes theTracking {
+      0% { letter-spacing: 2.8vw; }
+      100% { letter-spacing: 1.5vw; }
+    }
+
+    @keyframes indiaTracking {
+      0% { letter-spacing: 1.4vw; }
+      100% { letter-spacing: 0.5vw; }
+    }
+
+    /* ================= PAGE 2: D:\G9XG5G.webp BACKGROUND + FLOATING MAP ================= */
+    .page-2-map-section {
+      position: relative;
+      z-index: 20;
+      width: 100vw;
+      min-height: 100vh;
+      background:
+        linear-gradient(to bottom, rgba(0, 10, 35, 0.35) 0%, rgba(0, 10, 30, 0.5) 100%),
+        url('file:///D:/G9XG5G.webp') center center / cover no-repeat fixed,
+        url('D:/G9XG5G.webp') center center / cover no-repeat fixed,
+        url('G9XG5G.webp') center center / cover no-repeat fixed;
+      padding: 1rem 1.5%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      box-shadow: none;
+      opacity: 0;
+      will-change: opacity;
+    }
+
+    .map-header {
+      text-align: center;
+      margin: 0 auto 0.2rem auto;
+      z-index: 30;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(32px) scale(0.92);
+      filter: blur(10px);
+      will-change: opacity, transform, filter;
+    }
+
+    .map-header h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(2.2rem, 4.2vw, 3.4rem);
+      color: var(--gold-peach);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      text-shadow: 0 6px 24px rgba(0, 0, 0, 0.85), 0 2px 6px rgba(0, 0, 0, 0.9);
+      will-change: letter-spacing;
+    }
+
+    .map-stage {
+      position: relative;
+      width: 98vw;
+      max-width: 1720px;
+      height: 90vh;
+      min-height: 680px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: visible;
+      background: transparent !important;
+      border: none;
+      box-shadow: none;
+      opacity: 0;
+      transform: translateY(28px) scale(0.96);
+      will-change: opacity, transform;
+    }
+
+    #southAsiaMap {
+      width: 100%;
+      height: 100%;
+      background: transparent !important;
+      border: none;
+      outline: none;
+      animation: floatIndiaMap 6s ease-in-out infinite;
+    }
+
+    @keyframes floatIndiaMap {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .leaflet-container {
+      background: transparent !important;
+      border: none !important;
+      outline: none !important;
+    }
+
+    .leaflet-overlay-pane svg {
+      filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.85));
+    }
+
+    .island-beacon-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    .island-pulse-ring {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-peach);
+      background: radial-gradient(circle, rgba(0, 184, 148, 0.42) 0%, rgba(232, 168, 107, 0.1) 70%, transparent 100%);
+      box-shadow: 0 0 18px rgba(232, 168, 107, 0.85);
+      animation: islandPulse 2s infinite ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .island-pulse-ring::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--gold-peach);
+      box-shadow: 0 0 10px #fff;
+    }
+
+    .island-beacon-label {
+      margin-top: 4px;
+      background: rgba(0, 0, 95, 0.9);
+      color: var(--gold-peach);
+      border: 1px solid var(--gold-peach);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.65);
+    }
+
+    @keyframes islandPulse {
+      0% { transform: scale(0.88); opacity: 0.85; }
+      50% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(0.88); opacity: 0.85; }
+    }
+
+    /* ================= RIGHT SIDEBAR (SCROLLABLE WITH VIDEO + STAR RATING + GISCUS REVIEWS) ================= */
+    .state-sidebar {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      bottom: 14px;
+      width: 455px;
+      max-width: 94vw;
+      background: rgba(0, 0, 85, 0.94);
+      border: 1.5px solid var(--gold-peach);
+      border-radius: 22px;
+      padding: 1.35rem;
+      z-index: 1001;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.9rem;
+      backdrop-filter: blur(18px);
+      box-shadow: -15px 0 45px rgba(0, 0, 0, 0.75);
+      transform: translateX(115%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+    }
+
+    .state-sidebar.active {
+      transform: translateX(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar-scroll-body {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 0.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .sidebar-scroll-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar-scroll-body::-webkit-scrollbar-track {
+      background: rgba(0, 0, 40, 0.45);
+      border-radius: 8px;
+    }
+
+    .sidebar-scroll-body::-webkit-scrollbar-thumb {
+      background: rgba(232, 168, 107, 0.55);
+      border-radius: 8px;
+    }
+
+    .climate-badge {
+      display: inline-block;
+      padding: 0.28rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      background: rgba(232, 168, 107, 0.2);
+      color: var(--gold-peach);
+      margin-bottom: 0.35rem;
+      width: fit-content;
+    }
+
+    .sidebar-state-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.5rem;
+      color: var(--gold-peach);
+      margin-bottom: 0.25rem;
+    }
+
+    .sidebar-desc {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: rgba(253, 248, 244, 0.9);
+    }
+
+    .sidebar-video-box {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      min-height: 240px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(232, 168, 107, 0.6);
+      background: #000;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55);
+    }
+
+    .sidebar-video-box video,
+    .sidebar-video-box iframe {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: none;
+      display: block;
+    }
+
+    .yt-direct-badge {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      z-index: 16;
+      background: rgba(0, 0, 85, 0.88);
+      color: var(--gold-peach);
+      border: 1px solid var(--gold-peach);
+      padding: 0.28rem 0.6rem;
+      border-radius: 8px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-decoration: none;
+      backdrop-filter: blur(6px);
+      transition: all 0.2s ease;
+      display: none;
+    }
+
+    .yt-direct-badge:hover {
+      background: var(--gold-peach);
+      color: var(--navy-indigo);
+    }
+
+    /* ================= UPPER-LEFT "KNOW MORE [STATE NAME]" BUTTON ================= */
+    .state-cutout-trigger {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 15;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: rgba(0, 0, 128, 0.92);
+      border: 1.5px solid var(--gold-peach);
+      border-radius: 12px;
+      padding: 0.4rem 0.78rem;
+      cursor: pointer;
+      color: var(--white-soft);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65);
+      transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .state-cutout-trigger:hover {
+      transform: scale(1.05);
+      background: var(--gold-peach);
+      color: var(--navy-indigo);
+      box-shadow: 0 0 22px rgba(232, 168, 107, 0.85);
+    }
+
+    .cutout-svg-box {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 60, 0.7);
+      border-radius: 8px;
+      padding: 4px;
+      border: 1px solid rgba(232, 168, 107, 0.5);
+    }
+
+    .state-cutout-trigger:hover .cutout-svg-box {
+      background: var(--navy-indigo);
+    }
+
+    .cutout-svg-box svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .cutout-text-wrap {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .cutout-more-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: var(--gold-peach);
+      font-weight: 800;
+    }
+
+    .state-cutout-trigger:hover .cutout-more-label {
+      color: var(--navy-indigo);
+    }
+
+    .cutout-state-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.8rem;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    /* ================= STAR RATING & PUBLIC REVIEW SYSTEM UNDER VIDEO ================= */
+    .state-review-panel {
+      background: rgba(0, 8, 55, 0.78);
+      border: 1px solid rgba(232, 168, 107, 0.45);
+      border-radius: 16px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .rating-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(232, 168, 107, 0.22);
+      padding-bottom: 0.65rem;
+    }
+
+    .rating-title-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rating-section-label {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.92rem;
+      color: var(--gold-peach);
+      letter-spacing: 0.8px;
+    }
+
+    .rating-subtext {
+      font-size: 0.72rem;
+      color: rgba(253, 248, 244, 0.72);
+    }
+
+    .rating-score-pill {
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      background: rgba(232, 168, 107, 0.16);
+      border: 1px solid rgba(232, 168, 107, 0.5);
+      padding: 0.28rem 0.68rem;
+      border-radius: 20px;
+    }
+
+    .rating-avg-num {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--gold-peach);
+    }
+
+    .rating-total-count {
+      font-size: 0.7rem;
+      color: rgba(253, 248, 244, 0.8);
+    }
+
+    /* Interactive 5-Star Selector */
+    .interactive-star-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 0, 95, 0.65);
+      padding: 0.55rem 0.8rem;
+      border-radius: 12px;
+      border: 1px solid rgba(232, 168, 107, 0.3);
+    }
+
+    .star-prompt-text {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--white-soft);
+    }
+
+    .star-buttons-group {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .star-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.42rem;
+      line-height: 1;
+      cursor: pointer;
+      color: rgba(253, 248, 244, 0.28);
+      transition: transform 0.18s ease, color 0.18s ease, text-shadow 0.18s ease;
+      padding: 0 2px;
+    }
+
+    .star-btn.lit {
+      color: #FFD166;
+      text-shadow: 0 0 12px rgba(255, 209, 102, 0.85);
+    }
+
+    .star-btn:hover {
+      transform: scale(1.22);
+    }
+
+    /* Quick Public Review Form */
+    .quick-review-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .review-input-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .review-name-input,
+    .review-comment-input {
+      width: 100%;
+      background: rgba(0, 0, 45, 0.75);
+      border: 1px solid rgba(232, 168, 107, 0.4);
+      border-radius: 10px;
+      padding: 0.5rem 0.7rem;
+      color: var(--white-soft);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.8rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .review-name-input:focus,
+    .review-comment-input:focus {
+      border-color: var(--gold-peach);
+      box-shadow: 0 0 10px rgba(232, 168, 107, 0.35);
+    }
+
+    .review-comment-input {
+      resize: vertical;
+      min-height: 56px;
+    }
+
+    .post-review-btn {
+      align-self: flex-end;
+      background: var(--gold-peach);
+      color: var(--navy-indigo);
+      border: none;
+      border-radius: 9px;
+      padding: 0.45rem 0.95rem;
+      font-size: 0.76rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+    }
+
+    .post-review-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+
+    /* User Reviews Feed */
+    .public-reviews-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-height: 170px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .public-review-item {
+      background: rgba(0, 0, 75, 0.65);
+      border: 1px solid rgba(232, 168, 107, 0.25);
+      border-radius: 10px;
+      padding: 0.55rem 0.7rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .review-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.74rem;
+    }
+
+    .reviewer-author {
+      font-weight: 700;
+      color: var(--gold-peach);
+    }
+
+    .reviewer-stars {
+      color: #FFD166;
+      letter-spacing: 1px;
+      font-size: 0.75rem;
+    }
+
+    .reviewer-text {
+      font-size: 0.78rem;
+      line-height: 1.4;
+      color: rgba(253, 248, 244, 0.92);
+    }
+
+    /* Giscus GitHub Discussions Container */
+    .giscus-wrapper-box {
+      margin-top: 0.3rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid rgba(232, 168, 107, 0.25);
+    }
+
+    .giscus-header-tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+      color: var(--gold-peach);
+      font-weight: 700;
+      margin-bottom: 0.45rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .giscus-thread-host {
+      width: 100%;
+      min-height: 60px;
+    }
+
+    .close-video-btn {
+      width: 100%;
+      background: var(--gold-peach);
+      color: var(--navy-indigo);
+      border: none;
+      padding: 0.7rem 1rem;
+      border-radius: 10px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .close-video-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* ================= STATE TOURIST PLACES MODAL WINDOW ================= */
+    .tourist-places-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2500;
+      background: rgba(0, 0, 50, 0.94);
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .tourist-places-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .places-modal-card {
+      width: 100%;
+      max-width: 1200px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: linear-gradient(155deg, #000080 0%, #000045 100%);
+      border: 2px solid var(--gold-peach);
+      border-radius: 26px;
+      padding: 2.2rem;
+      box-shadow: 0 25px 75px rgba(0, 0, 0, 0.85);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .places-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid rgba(232, 168, 107, 0.35);
+      padding-bottom: 1.2rem;
+    }
+
+    .places-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .header-cutout-preview {
+      width: 60px;
+      height: 60px;
+      filter: drop-shadow(0 0 10px rgba(232, 168, 107, 0.6));
+    }
+
+    .places-modal-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.6rem, 2.8vw, 2.3rem);
+      color: var(--gold-peach);
+      line-height: 1.2;
+    }
+
+    .places-modal-subtitle {
+      font-size: 0.88rem;
+      color: rgba(253, 248, 244, 0.85);
+      margin-top: 0.3rem;
+      letter-spacing: 0.5px;
+    }
+
+    .places-close-btn {
+      background: var(--gold-peach);
+      color: var(--navy-indigo);
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .places-close-btn:hover {
+      transform: scale(1.04);
+      opacity: 0.95;
+    }
+
+    /* ================= TOURIST PLACES GRID WITH PHOTO BACKGROUNDS ================= */
+    .tourist-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+    }
+
+    .place-photo-card {
+      position: relative;
+      min-height: 330px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(232, 168, 107, 0.5);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.6rem;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+      transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+
+    .place-photo-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      border-color: var(--gold-peach);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(232, 168, 107, 0.4);
+    }
+
+    .place-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 10, 45, 0.2) 0%, rgba(0, 8, 35, 0.72) 42%, rgba(0, 5, 25, 0.95) 100%);
+      z-index: 1;
+      transition: background 0.3s ease;
+    }
+
+    .place-photo-card:hover .place-card-overlay {
+      background: linear-gradient(180deg, rgba(0, 10, 45, 0.1) 0%, rgba(0, 8, 35, 0.65) 38%, rgba(0, 5, 25, 0.97) 100%);
+    }
+
+    .place-card-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .place-category-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: var(--gold-peach);
+      background: rgba(0, 0, 80, 0.85);
+      border: 1px solid rgba(232, 168, 107, 0.45);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      width: fit-content;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .place-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.42rem;
+      color: #ffffff;
+      line-height: 1.3;
+      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.9);
+    }
+
+    .place-description {
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: rgba(253, 248, 244, 0.95);
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95);
+    }
+
+    /* Hover Tooltip for States */
+    .leaflet-tooltip.climate-tooltip {
+      background-color: var(--navy-indigo);
+      color: var(--gold-peach);
+      border: 1px solid var(--gold-peach);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 8px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (max-width: 900px) {
+      .places-modal-header {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .places-close-btn {
+        align-self: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= PAGE 1: HERO ================= -->
+  <div class="page-1-wrapper">
+    <section class="page-1-hero" id="page1Hero">
+      <video class="hero-bg-video" id="heroVideo" autoplay loop muted playsinline>
+        <source src="Watch_India_in_4K___One-Minute_Cinematic_Travel_Video___India_Places_to_Visit(720p).mp4" type="video/mp4">
+      </video>
+
+      <svg class="hero-mask-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+        <defs>
+          <filter id="welcome-blur-filter" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur id="welcomeBlurNode" in="SourceGraphic" stdDeviation="0" />
+          </filter>
+          <filter id="india-blur-filter" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur id="indiaBlurNode" in="SourceGraphic" stdDeviation="12" />
+          </filter>
+
+          <mask id="india-cutout-mask" x="0" y="0" width="100%" height="100%">
+            <rect x="0" y="0" width="100%" height="100%" fill="white" />
+
+            <!-- STAGE 1: "WELCOME TO" -->
+            <g id="welcomeStage" class="mask-stage-group welcome-stage" filter="url(#welcome-blur-filter)">
+              <text class="welcome-word" x="50%" y="44%" fill="black">WELCOME</text>
+              <text class="to-word" x="50%" y="63%" fill="black">TO</text>
+            </g>
+
+            <!-- STAGE 2: "THE INDIA" -->
+            <g id="indiaStage" class="mask-stage-group india-stage" filter="url(#india-blur-filter)">
+              <text class="the-word" x="50%" y="28%" fill="black">THE</text>
+              <text class="india-word" x="50%" y="54%" fill="black">INDIA</text>
+            </g>
+          </mask>
+        </defs>
+        <rect x="0" y="0" width="100%" height="100%" fill="#000080" mask="url(#india-cutout-mask)" />
+      </svg>
+    </section>
+  </div>
+
+  <!-- ================= PAGE 2: MAP ================= -->
+  <section class="page-2-map-section" id="page2Map">
+    <div class="map-header" id="mapHeader">
+      <h2 id="exploreTitleText">Explore The India</h2>
+    </div>
+
+    <div class="map-stage" id="mapStageBox">
+      <div id="southAsiaMap"></div>
+
+      <!-- Right Sidebar: State Preview + Video + Star Rating & Public Comments -->
+      <aside class="state-sidebar" id="stateSidebar">
+        <div class="sidebar-scroll-body">
+          <div>
+            <span class="climate-badge" id="sidebarClimateBadge">Climate Zone</span>
+            <h3 class="sidebar-state-title" id="sidebarStateTitle">State Name</h3>
+            <p class="sidebar-desc" id="sidebarStateDesc">State description.</p>
+          </div>
+
+          <!-- 1. STATE VIDEO BOX -->
+          <div class="sidebar-video-box">
+            <!-- UPPER-LEFT BUTTON: "KNOW MORE [STATE NAME]" -->
+            <button class="state-cutout-trigger" id="stateCutoutTrigger" onclick="openTouristPlacesModal()" title="Click to view Best Tourist Places">
+              <div class="cutout-svg-box" id="smallStateCutoutSvg"></div>
+              <div class="cutout-text-wrap">
+                <span class="cutout-more-label">Know More</span>
+                <span class="cutout-state-name" id="cutoutStateLabel">State</span>
+              </div>
+            </button>
+
+            <!-- Video Player -->
+            <video id="sidebarVideo" loop playsinline controls></video>
+            <iframe
+              id="sidebarYoutube"
+              style="display: none;"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen>
+            </iframe>
+            <a id="sidebarYtDirect" class="yt-direct-badge" target="_blank" rel="noopener">1080p HD • YouTube ↗</a>
+          </div>
+
+          <!-- 2. STAR RATING & PUBLIC REVIEW SYSTEM UNDER VIDEO -->
+          <div class="state-review-panel" id="stateReviewPanel">
+            <div class="rating-header-row">
+              <div class="rating-title-wrap">
+                <span class="rating-section-label">Traveller Ratings & Reviews</span>
+                <span class="rating-subtext" id="ratingStateSubtitle">Rate & review this destination</span>
+              </div>
+              <div class="rating-score-pill">
+                <span class="rating-avg-num" id="stateAvgRating">4.9 ★</span>
+                <span class="rating-total-count" id="stateRatingCount">(28 reviews)</span>
+              </div>
+            </div>
+
+            <!-- Interactive 5-Star Selector -->
+            <div class="interactive-star-bar">
+              <span class="star-prompt-text" id="starPromptText">Tap stars to rate:</span>
+              <div class="star-buttons-group" id="starButtonsGroup">
+                <button type="button" class="star-btn lit" data-star="1" onclick="selectStarRating(1)" onmouseenter="previewStarHover(1)" onmouseleave="restoreStarDisplay()">★</button>
+                <button type="button" class="star-btn lit" data-star="2" onclick="selectStarRating(2)" onmouseenter="previewStarHover(2)" onmouseleave="restoreStarDisplay()">★</button>
+                <button type="button" class="star-btn lit" data-star="3" onclick="selectStarRating(3)" onmouseenter="previewStarHover(3)" onmouseleave="restoreStarDisplay()">★</button>
+                <button type="button" class="star-btn lit" data-star="4" onclick="selectStarRating(4)" onmouseenter="previewStarHover(4)" onmouseleave="restoreStarDisplay()">★</button>
+                <button type="button" class="star-btn lit" data-star="5" onclick="selectStarRating(5)" onmouseenter="previewStarHover(5)" onmouseleave="restoreStarDisplay()">★</button>
+              </div>
+            </div>
+
+            <!-- Instant Comment & Star Review Form -->
+            <form class="quick-review-form" onsubmit="submitStateReview(event)">
+              <div class="review-input-row">
+                <input type="text" id="reviewerNameInput" class="review-name-input" placeholder="Your name (e.g. Traveller)" maxlength="40" required />
+              </div>
+              <textarea id="reviewerCommentInput" class="review-comment-input" placeholder="Write your public review or travel experience for this state..." maxlength="280" required></textarea>
+              <button type="submit" class="post-review-btn">★ Post Public Review</button>
+            </form>
+
+            <!-- Public Reviews List -->
+            <div class="public-reviews-list" id="publicReviewsList"></div>
+
+            <!-- Giscus Public Comment System (Per-State Discussion Thread) -->
+            <div class="giscus-wrapper-box">
+              <div class="giscus-header-tag">
+                <span>💬 Public Community Comments (Giscus)</span>
+                <span id="giscusStateTermBadge"></span>
+              </div>
+              <div id="giscusThreadContainer" class="giscus-thread-host"></div>
+            </div>
+          </div>
+        </div>
+
+        <button class="close-video-btn" onclick="leaveStateAndReset()">
+          ✕ Close & Return to Map
+        </button>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= TOURIST PLACES WINDOW OVERLAY ================= -->
+  <div class="tourist-places-modal" id="touristPlacesModal">
+    <div class="places-modal-card">
+      <div class="places-modal-header">
+        <div class="places-header-left">
+          <div class="header-cutout-preview" id="modalHeaderCutout"></div>
+          <div>
+            <h2 class="places-modal-title" id="placesModalStateTitle">Best Tourist Places</h2>
+            <p class="places-modal-subtitle" id="placesModalSubtitle">Iconic landmarks, heritage sites & scenic attractions.</p>
+          </div>
+        </div>
+        <button class="places-close-btn" onclick="closeTouristPlacesModal()">✕ Back to State Preview</button>
+      </div>
+
+      <!-- CARDS WITH DESTINATION PHOTOS AS BACKGROUND -->
+      <div class="tourist-cards-grid" id="touristCardsContainer"></div>
+    </div>
+  </div>
+
+  <script>
+    // ================= 0. 60FPS OPTICAL BLUR INTERPOLATION FOR SMOOTH MORPH =================
+    window.addEventListener('DOMContentLoaded', () => {
+      const welcomeBlur = document.getElementById('welcomeBlurNode');
+      const indiaBlur = document.getElementById('indiaBlurNode');
+      const startTime = performance.now();
+
+      function animateOpticalMorph(now) {
+        const elapsed = (now - startTime) / 1000;
+
+        if (welcomeBlur) {
+          let wBlur = 0;
+          if (elapsed < 0.8) {
+            wBlur = (1 - elapsed / 0.8) * 8;
+          } else if (elapsed > 2.25) {
+            const outProgress = Math.min((elapsed - 2.25) / 1.4, 1);
+            wBlur = Math.pow(outProgress, 2) * 16;
+          }
+          welcomeBlur.setAttribute('stdDeviation', wBlur.toFixed(2));
+        }
+
+        if (indiaBlur) {
+          let iBlur = 14;
+          if (elapsed >= 2.35) {
+            const inProgress = Math.min((elapsed - 2.35) / 1.65, 1);
+            const eased = 1 - Math.pow(1 - inProgress, 3);
+            iBlur = (1 - eased) * 14;
+          }
+          indiaBlur.setAttribute('stdDeviation', iBlur.toFixed(2));
+        }
+
+        if (elapsed < 4.5) {
+          requestAnimationFrame(animateOpticalMorph);
+        } else {
+          if (indiaBlur) indiaBlur.setAttribute('stdDeviation', '0');
+        }
+      }
+
+      requestAnimationFrame(animateOpticalMorph);
+    });
+
+    // ================= 1. ULTRA-SMOOTH LERP SCROLL FADE ("EXPLORE THE INDIA" + MAP) =================
+    const page1Hero = document.getElementById('page1Hero');
+    const page2Map = document.getElementById('page2Map');
+    const mapHeader = document.getElementById('mapHeader');
+    const exploreTitleText = document.getElementById('exploreTitleText');
+    const mapStageBox = document.getElementById('mapStageBox');
+
+    let targetScrollProgress = 0;
+    let currentScrollProgress = 0;
+    let scrollRafId = null;
+
+    function computeTargetScroll() {
+      const scrollY = window.scrollY;
+      const vh = window.innerHeight || 1;
+      targetScrollProgress = Math.min(Math.max(scrollY / (vh * 0.82), 0), 1);
+      if (!scrollRafId) {
+        scrollRafId = requestAnimationFrame(renderSmoothScrollTransition);
+      }
+    }
+
+    function renderSmoothScrollTransition() {
+      currentScrollProgress += (targetScrollProgress - currentScrollProgress) * 0.11;
+
+      if (Math.abs(targetScrollProgress - currentScrollProgress) < 0.001) {
+        currentScrollProgress = targetScrollProgress;
+      }
+
+      const p = currentScrollProgress;
+
+      const heroOpacity = Math.max(0, 1 - p * 1.15);
+      page1Hero.style.opacity = heroOpacity.toFixed(3);
+      page1Hero.style.transform = `scale(${(1 + p * 0.08).toFixed(4)})`;
+      page1Hero.style.pointerEvents = p > 0.55 ? 'none' : 'auto';
+
+      page2Map.style.opacity = p.toFixed(3);
+
+      const titleRaw = Math.min(Math.max((p - 0.18) / 0.68, 0), 1);
+      const titleEased = 1 - Math.pow(1 - titleRaw, 3);
+
+      const titleY = (1 - titleEased) * 34;
+      const titleScale = 0.90 + titleEased * 0.10;
+      const titleBlur = (1 - titleEased) * 10;
+      const titleTracking = 14 - titleEased * 10;
+
+      mapHeader.style.opacity = titleEased.toFixed(3);
+      mapHeader.style.transform = `translateY(${titleY.toFixed(2)}px) scale(${titleScale.toFixed(3)})`;
+      mapHeader.style.filter = `blur(${titleBlur.toFixed(2)}px)`;
+      if (exploreTitleText) {
+        exploreTitleText.style.letterSpacing = `${titleTracking.toFixed(2)}px`;
+      }
+
+      const stageRaw = Math.min(Math.max((p - 0.10) / 0.78, 0), 1);
+      const stageEased = 1 - Math.pow(1 - stageRaw, 3);
+      const stageY = (1 - stageEased) * 26;
+      const stageScale = 0.96 + stageEased * 0.04;
+
+      mapStageBox.style.opacity = stageEased.toFixed(3);
+      mapStageBox.style.transform = `translateY(${stageY.toFixed(2)}px) scale(${stageScale.toFixed(3)})`;
+
+      if (Math.abs(targetScrollProgress - currentScrollProgress) > 0.001) {
+        scrollRafId = requestAnimationFrame(renderSmoothScrollTransition);
+      } else {
+        scrollRafId = null;
+      }
+    }
+
+    window.addEventListener('scroll', computeTargetScroll, { passive: true });
+    window.addEventListener('resize', computeTargetScroll, { passive: true });
+    computeTargetScroll();
+
+    // =========================================================================================
+    // 2. STATE VIDEOS & YOUTUBE ASSIGNMENTS (ALL 33 STATES & UTs CONFIGURED)
+    // =========================================================================================
+    const DEFAULT_VIDEO = "Watch_India_in_4K___One-Minute_Cinematic_Travel_Video___India_Places_to_Visit(720p).mp4";
+
+    const WEST_BENGAL_YT        = "https://www.youtube.com/embed/6CjwVHGlXho?si=5zvo9U0uEODEgWJz";
+    const ANDAMAN_YT            = "https://www.youtube.com/embed/s-BOAKflid4?si=yCWJDBG-DAqsCXEH";
+    const ODISHA_YT             = "https://www.youtube.com/embed/Uqmc0891L2U?si=T4zPz2D_5jBiYys5";
+    const LAKSHADWEEP_YT        = "https://www.youtube.com/embed/vKXOJD2q1rg?si=DUIAzcKZS0302iYc";
+    const KASHMIR_YT            = "https://www.youtube.com/embed/MHZpkHqB-U0?si=BMZRxWEKttONdJJC";
+    const HIMACHAL_PRADESH_YT   = "https://www.youtube.com/embed/0CgYVNztVng?si=xVKjGVPO9LZeIZQ9";
+    const UTTARAKHAND_YT        = "https://www.youtube.com/embed/BWNhsLBLXOk?si=jgUi4Riyb2GzZzIw";
+    const LADAKH_YT             = "https://www.youtube.com/embed/ZFLsBXFK3Pc?si=8w0eqjbrpBAp4oBY";
+    const UTTAR_PRADESH_YT      = "https://www.youtube.com/embed/7v5-D5Dnn9s?si=S0m0KA-L8yhugun4";
+    const BIHAR_YT              = "https://www.youtube.com/embed/WMP7m11Fl8s?si=PFIMi4UjBNYKBDAT";
+    const GOA_YT                = "https://www.youtube.com/embed/ZHqaLQ1OeEg?si=JsDqVcRftZlNIiNb";
+    const JHARKHAND_YT          = "https://www.youtube.com/embed/_a9JFQfF5_0?si=8By08Qa6AfTArwlF";
+    const MADHYA_PRADESH_YT     = "https://www.youtube.com/embed/ivVDBmu5Nuo?si=dr_MD9tIa8d1iCd6";
+    const CHHATTISGARH_YT       = "https://www.youtube.com/embed/kErF9WIbwpU?si=CPy5EijIRdEVr_k1";
+    const MAHARASHTRA_YT        = "https://www.youtube.com/embed/OICBMyN6Ctg?si=SHinNohbd7P0kV3W";
+    const GUJARAT_YT            = "https://www.youtube.com/embed/7npKXqchrzg?si=72qysuS8vGVSyw4U";
+    const RAJASTHAN_YT          = "https://www.youtube.com/embed/tjOKN0r58Es?si=r592V0SDk4JPKl6J";
+    const PUNJAB_YT             = "https://www.youtube.com/embed/1O2Fiv6gt8E?si=f3HRL9BU9etKTnlZ";
+    const HARYANA_YT            = "https://www.youtube.com/embed/ub6IfkDJl3E?si=vudfbsmCIs_YGew9";
+    const DELHI_YT              = "https://www.youtube.com/embed/kxoshFAPX7k?si=zZMaOlqOAj64lFaV";
+    const SIKKIM_YT             = "https://www.youtube.com/embed/K7IYGNxwzQA?si=erCMXtwW-CnJWsr4";
+    const ASSAM_YT              = "https://www.youtube.com/embed/y47G4-XyW14?si=_-nvRDBgKL7D4UMu";
+    const MANIPUR_YT            = "https://www.youtube.com/embed/ILhRZ6rP9eg?si=0i3zmqMj3Wcln8y3";
+    const MIZORAM_YT            = "https://www.youtube.com/embed/U32QY3ixpZA?si=g21IYjx8bYLfL5L2";
+    const ARUNACHAL_PRADESH_YT  = "https://www.youtube.com/embed/GJ9wUxjxUsw?si=OF3uG-wqdRn88Xbq";
+    const NAGALAND_YT           = "https://www.youtube.com/embed/XYKzVunKXBk?si=Iu9ETthcIme0_RQ1";
+    const TRIPURA_YT            = "https://www.youtube.com/embed/pt9Ldnh5qdg?si=uzke7BV6KZYiUBSn";
+    const MEGHALAYA_YT          = "https://www.youtube.com/embed/7vyAUQbwWII?si=epajQy5tZeZzCpG6";
+    const KERALA_YT             = "https://www.youtube.com/embed/zD43hknPtLc?si=1vVCh3GePCPD-Q32";
+    const KARNATAKA_YT          = "https://www.youtube.com/embed/dSbvWaHTXwU?si=CLcDVBwK-e-bvEth";
+    const TAMIL_NADU_YT         = "https://www.youtube.com/embed/6RWTmulkXXg?si=lxdxDgCzdeN7VVqY";
+    const ANDHRA_PRADESH_YT     = "https://www.youtube.com/embed/R7T4R_w2_xc?si=uPQF-B4DdwrVz60q";
+    const TELANGANA_YT          = "https://www.youtube.com/embed/G9Hf3hxa0kw?si=crXq8uYHQdhhK4Bo";
+
+    function normalizeStateKey(name) {
+      if (!name) return "";
+      const n = name.trim();
+      const aliases = {
+        "Andaman & Nicobar Island": "Andaman and Nicobar Islands",
+        "Andaman & Nicobar Islands": "Andaman and Nicobar Islands",
+        "Andaman and Nicobar": "Andaman and Nicobar Islands",
+        "Arunanchal Pradesh": "Arunachal Pradesh",
+        "Arunachal Pradash": "Arunachal Pradesh",
+        "Jammu & Kashmir": "Jammu and Kashmir",
+        "NCT of Delhi": "Delhi",
+        "Dadara & Nagar Havelli": "Dadra and Nagar Haveli",
+        "Daman & Diu": "Daman and Diu",
+        "Orissa": "Odisha",
+        "Pondicherry": "Puducherry",
+        "Uttaranchal": "Uttarakhand",
+        "Chattisgarh": "Chhattisgarh",
+        "Maharastra": "Maharashtra",
+        "Behar": "Bihar",
+        "Panjab": "Punjab",
+        "Hariyana": "Haryana",
+        "Sikim": "Sikkim",
+        "Sasm": "Assam",
+        "Asam": "Assam",
+        "Mizorzm": "Mizoram",
+        "Maghalaya": "Meghalaya",
+        "Karala": "Kerala",
+        "Andra Pradesh": "Andhra Pradesh",
+        "Trlengana": "Telangana"
+      };
+      return aliases[n] || n;
+    }
+
+    const stateClimateAndVideos = {
+      "Lakshadweep": {
+        zone: "Highlighted Tropical Coral Archipelago", color: "#00b894",
+        desc: "Lakshadweep — 36 pristine coral atolls and turquoise lagoons in the Arabian Sea.",
+        video: LAKSHADWEEP_YT
+      },
+      "Andaman and Nicobar Islands": {
+        zone: "Highlighted Tropical Maritime Archipelago", color: "#00b894",
+        desc: "Andaman & Nicobar Islands — emerald rainforest islands and coral reefs in the Bay of Bengal.",
+        video: ANDAMAN_YT
+      },
+      "Jammu and Kashmir": {
+        zone: "Alpine & Glacial Himalayan", color: "#74b9ff",
+        desc: "Snow-draped Himalayan peaks, floating Dal Lake houseboats, and saffron valleys.",
+        video: KASHMIR_YT
+      },
+      "Ladakh": {
+        zone: "Cold High-Altitude Desert", color: "#74b9ff",
+        desc: "High-altitude mountain passes, stark Himalayan valleys, and cliffside Buddhist gompas.",
+        video: LADAKH_YT
+      },
+      "Himachal Pradesh": {
+        zone: "Alpine & Mountain Forest", color: "#74b9ff",
+        desc: "Snow-covered deodar forests, UNESCO mountain railways, and Spiti Valley.",
+        video: HIMACHAL_PRADESH_YT
+      },
+      "Uttarakhand": {
+        zone: "Alpine & Himalayan Foothills", color: "#74b9ff",
+        desc: "Glacial river confluences, sacred mountain shrines, and alpine meadows.",
+        video: UTTARAKHAND_YT
+      },
+      "Sikkim": {
+        zone: "Alpine & Glacial Eastern Himalayas", color: "#74b9ff",
+        desc: "Soaring Kanchenjunga snow peaks, sacred glacial lakes, and ancient hilltop Buddhist monasteries.",
+        video: SIKKIM_YT
+      },
+      "Arunachal Pradesh": {
+        zone: "Alpine & Sub-Himalayan Dawn Mountains", color: "#74b9ff",
+        desc: "The Land of Dawn-Lit Mountains — home to Tawang Monastery, snow-draped Sela Pass, and lush Ziro valleys.",
+        video: ARUNACHAL_PRADESH_YT
+      },
+      "Nagaland": {
+        zone: "Subtropical Naga Hills & Cloud Valleys", color: "#00b894",
+        desc: "Emerald bamboo-clad ridges of Dzukou Valley, heritage Naga morungs, and the vibrant Hornbill Festival.",
+        video: NAGALAND_YT
+      },
+      "Assam": {
+        zone: "Subtropical Brahmaputra Valley", color: "#6ab04c",
+        desc: "Rolling emerald tea gardens, the mighty Brahmaputra river islands, and one-horned rhinos of Kaziranga.",
+        video: ASSAM_YT
+      },
+      "Meghalaya": {
+        zone: "Subtropical Cloud & Rainforest Plateau", color: "#00b894",
+        desc: "The Abode of Clouds — living root bridges, crystal-clear Dawki rivers, and plunging Cherrapunji waterfalls.",
+        video: MEGHALAYA_YT
+      },
+      "Manipur": {
+        zone: "Subtropical Highland & Floating Valley", color: "#00b894",
+        desc: "Home to the floating phumdis of Loktak Lake, emerald Dzukou hills, and classical Manipuri heritage.",
+        video: MANIPUR_YT
+      },
+      "Tripura": {
+        zone: "Tropical Monsoon Hills & Royal Lakes", color: "#00b894",
+        desc: "Gleaming white Ujjayanta Palace, floating Neermahal water palace, and ancient rock-cut carvings of Unakoti.",
+        video: TRIPURA_YT
+      },
+      "Mizoram": {
+        zone: "Tropical Montane Blue Hills", color: "#00b894",
+        desc: "Misty rolling Blue Mountains, plunging Vantawng waterfalls, and bamboo-clad cliffside villages.",
+        video: MIZORAM_YT
+      },
+      "West Bengal": {
+        zone: "Tropical Wet-and-Dry Delta", color: "#00b894",
+        desc: "Darjeeling mountain mist, Hooghly river sunsets, and the royal Sundarbans delta.",
+        video: WEST_BENGAL_YT
+      },
+      "Odisha": {
+        zone: "Tropical Coastal Plains", color: "#00b894",
+        desc: "Ancient chariot temples, golden beaches, and dolphin-rich Chilika lagoon.",
+        video: ODISHA_YT
+      },
+      "Rajasthan": {
+        zone: "Arid Thar Desert Climate", color: "#f39c12",
+        desc: "Golden sand dunes, lakeside Rajput palaces, and hill citadels.",
+        video: RAJASTHAN_YT
+      },
+      "Gujarat": {
+        zone: "Arid & Semi-Arid Coastal", color: "#f39c12",
+        desc: "The white salt desert of Kutch, ancient stepwells, and Asiatic lion sanctuaries.",
+        video: GUJARAT_YT
+      },
+      "Punjab": {
+        zone: "Subtropical Continental Plains", color: "#6ab04c",
+        desc: "Fertile five-river plains and the gleaming Golden Temple in Amritsar.",
+        video: PUNJAB_YT
+      },
+      "Haryana": {
+        zone: "Subtropical Plains", color: "#6ab04c",
+        desc: "Historic Kurukshetra heritage, lush agricultural heartlands, and Sultanpur bird sanctuaries.",
+        video: HARYANA_YT
+      },
+      "Delhi": {
+        zone: "Humid Subtropical Capital", color: "#6ab04c",
+        desc: "Monumental sandstone India Gate, Red Fort, and centuries of imperial heritage.",
+        video: DELHI_YT
+      },
+      "Uttar Pradesh": {
+        zone: "Humid Subtropical Gangetic Plain", color: "#6ab04c",
+        desc: "Home to the iconic ivory-white Taj Mahal in Agra and ancient sacred ghats of Varanasi.",
+        video: UTTAR_PRADESH_YT
+      },
+      "Bihar": {
+        zone: "Humid Subtropical Plains", color: "#6ab04c",
+        desc: "Fertile Gangetic plains, sacred Bodh Gaya Mahabodhi Temple, and ancient Nalanda University.",
+        video: BIHAR_YT
+      },
+      "Jharkhand": {
+        zone: "Subtropical Chota Nagpur Plateau", color: "#e67e22",
+        desc: "Rolling forested hills, Hundru & Dassam waterfalls, and sacred Parasnath peaks.",
+        video: JHARKHAND_YT
+      },
+      "Madhya Pradesh": {
+        zone: "Subtropical Central Highlands", color: "#e67e22",
+        desc: "Khajuraho sculpted temples, Sanchi Buddhist stupas, and dense tiger reserves.",
+        video: MADHYA_PRADESH_YT
+      },
+      "Chhattisgarh": {
+        zone: "Tropical Dry & Moist Deciduous", color: "#e67e22",
+        desc: "Roaring Chitrakote waterfalls, subterranean limestone caves, and Bastar tribal heritage.",
+        video: CHHATTISGARH_YT
+      },
+      "Maharashtra": {
+        zone: "Tropical Semi-Arid & Konkan Coast", color: "#e67e22",
+        desc: "Basalt Western Ghats cliffs, rock-cut Ajanta & Ellora caves, and the vibrant Mumbai coast.",
+        video: MAHARASHTRA_YT
+      },
+      "Goa": {
+        zone: "Tropical Monsoon Coast", color: "#00b894",
+        desc: "Palm-lined Arabian Sea beaches, UNESCO Old Goa basilicas, and Dudhsagar waterfalls.",
+        video: GOA_YT
+      },
+      "Telangana": {
+        zone: "Semi-Arid Deccan Plateau", color: "#e67e22",
+        desc: "Monumental Charminar arches, acoustic Golconda citadel, and UNESCO Kakatiya stone temples.",
+        video: TELANGANA_YT
+      },
+      "Andhra Pradesh": {
+        zone: "Tropical Coromandel Coast & Eastern Ghats", color: "#00b894",
+        desc: "Misty Araku coffee valleys, sacred Tirumala hills, and the dramatic Gandikota red-rock canyon.",
+        video: ANDHRA_PRADESH_YT
+      },
+      "Karnataka": {
+        zone: "Western Ghats & Deccan Heritage", color: "#e67e22",
+        desc: "Boulder-strewn Hampi ruins, illuminated Mysore Palace, and misty Coorg coffee plantations.",
+        video: KARNATAKA_YT
+      },
+      "Tamil Nadu": {
+        zone: "Tropical Coromandel & Nilgiri Hills", color: "#00b894",
+        desc: "Towering Dravidian temple gopurams of Madurai & Thanjavur, coastal Mahabalipuram, and Ooty hills.",
+        video: TAMIL_NADU_YT
+      },
+      "Kerala": {
+        zone: "Tropical Wet Malabar Monsoon Coast", color: "#00b894",
+        desc: "Tranquil palm-fringed Alleppey backwaters, mist-cloaked Munnar tea estates, and Varkala cliffs.",
+        video: KERALA_YT
+      }
+    };
+
+    function getStateData(stateName) {
+      const canonical = normalizeStateKey(stateName);
+      return stateClimateAndVideos[canonical] || {
+        zone: "Tropical Monsoon Region",
+        color: "#00b894",
+        desc: `Explore the vibrant geography, cultural heritage, and landscapes of ${canonical}.`,
+        video: DEFAULT_VIDEO
+      };
+    }
+
+    // =========================================================================================
+    // 3. TOP TOURIST PLACES DATABASE (NAMES, HIGHLIGHTS, & REAL PHOTOGRAPHS)
+    // =========================================================================================
+    const stateTouristDestinations = {
+      "Arunachal Pradesh": [
+        {
+          name: "Tawang Monastery & Sela Pass",
+          tag: "Largest Monastery in India • 3,048m",
+          desc: "Perched high in the Eastern Himalayas, this 400-year-old Buddhist gompa overlooks glacial valleys and the snow-covered Sela Pass.",
+          image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Ziro Valley & Pine Groves",
+          tag: "UNESCO Tentative Heritage • Apatani Culture",
+          desc: "Lush emerald rice paddies ringed by towering blue pine hills, celebrated for sustainable Apatani tribal heritage and indie music festivals.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Namdapha National Park & Dirang Valley",
+          tag: "Eastern Himalayan Biodiversity Hotspot",
+          desc: "Subtropical rainforests rising into alpine meadows, sheltering red pandas, clouded leopards, hot springs, and kiwi orchards.",
+          image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Nagaland": [
+        {
+          name: "Dzukou Valley",
+          tag: "Valley of Celestial Flowers • 2,452m",
+          desc: "Rolling emerald dwarf-bamboo hills on the Nagaland-Manipur border that burst into bloom with rare pink and white Dzukou lilies every monsoon.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Kisama Heritage Village & Kohima",
+          tag: "Home of the Hornbill Festival",
+          desc: "Showcasing traditional carved wooden Morungs of 16 Naga tribes, ceremonial log drums, and the historic WWII cemetery in Kohima.",
+          image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Khonoma Green Village",
+          tag: "Asia's First Green Village",
+          desc: "A 700-year-old Angami Naga settlement famous for terraced alder-tree agriculture, stone-paved heritage trails, and community wildlife conservation.",
+          image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Tripura": [
+        {
+          name: "Ujjayanta Palace, Agartala",
+          tag: "Royal Manikya Dynasty Palace",
+          desc: "A gleaming white Indo-Saracenic royal palace set amidst Mughal-style fountains, sprawling reflection pools, and heritage museum galleries.",
+          image: "https://images.unsplash.com/photo-1558431382-27e303142255?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Neermahal Water Palace, Melaghar",
+          tag: "Lake Palace of Eastern India",
+          desc: "Built in the middle of Rudrasagar Lake, this romantic red-and-white summer palace blends Hindu and Mughal architectural domes and pavilions.",
+          image: "https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Unakoti Rock-Cut Sculptures",
+          tag: "8th Century Shaivite Bas-Reliefs",
+          desc: "Colossal ancient rock-cut murals and stone idols carved directly into lush jungle cliffs alongside roaring mountain waterfalls.",
+          image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Meghalaya": [
+        {
+          name: "Double Decker Living Root Bridge, Nongriat",
+          tag: "UNESCO Tentative Bio-Engineering Wonder",
+          desc: "Hand-woven over centuries by Khasi artisans from the aerial roots of rubber fig trees, spanning across turquoise jungle streams in Cherrapunji.",
+          image: "https://images.unsplash.com/photo-1518002171953-a080ee817e1f?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Umngot River, Dawki & Mawlynnong",
+          tag: "Crystal-Clear Glass Waters",
+          desc: "Wooden country boats appear to float in mid-air above the emerald riverbed of Dawki, near Mawlynnong—celebrated as Asia's cleanest village.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Nohkalikai Falls & Laitlum Canyons",
+          tag: "India's Tallest Plunge Waterfall • 340m",
+          desc: "Thundering off the misty East Khasi Hills into an aquamarine pool below, paired with sweeping cloud-filled gorges at Laitlum.",
+          image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Kerala": [
+        {
+          name: "Alleppey & Kumarakom Backwaters",
+          tag: "Venice of the East • Kettuvallam Cruises",
+          desc: "Drift along tranquil palm-fringed lagoons, Vembanad Lake, and emerald paddy fields aboard traditional thatched wooden houseboats.",
+          image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Munnar Tea Estates & Eravikulam",
+          tag: "Western Ghats Misty Hill Station",
+          desc: "Rolling green carpets of high-altitude tea plantations, cascading waterfalls, and the endangered Nilgiri Tahr in the Western Ghats.",
+          image: "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Varkala Red Cliffs & Fort Kochi",
+          tag: "Arabian Sea Cliffs & Chinese Fishing Nets",
+          desc: "Dramatic red laterite cliffs dropping straight into the Arabian Sea at Varkala, paired with historic colonial streets and cantilevered fishing nets in Kochi.",
+          image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Karnataka": [
+        {
+          name: "Hampi Stone Chariot & Virupaksha",
+          tag: "UNESCO World Heritage • Vijayanagara Empire",
+          desc: "An open-air museum of 14th-century Dravidian temples, musical stone pillars, and royal enclosures set amidst surreal giant granite boulders.",
+          image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Mysore Palace (Amba Vilas)",
+          tag: "City of Palaces • Wodeyar Heritage",
+          desc: "An Indo-Saracenic architectural masterpiece featuring stained-glass Durbar halls and nearly 100,000 golden incandescent bulbs that light up the night sky.",
+          image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Coorg (Kodagu) & Jog Waterfalls",
+          tag: "Scotland of India • Coffee & Spice Hills",
+          desc: "Misty Arabica coffee estates, Abbey Falls, and Raja's Seat viewpoints in the Western Ghats alongside the roaring 253-meter plunge of Jog Falls.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Tamil Nadu": [
+        {
+          name: "Meenakshi Amman Temple, Madurai",
+          tag: "Dravidian Architectural Marvel",
+          desc: "Celebrated for its 14 towering, vibrantly painted Gopurams covered in thousands of mythological sculptures and the Hall of a Thousand Pillars.",
+          image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Shore Temple, Mahabalipuram & Brihadeeswarar",
+          tag: "UNESCO World Heritage • Chola & Pallava Art",
+          desc: "7th-century monolithic granite shore temples overlooking the Bay of Bengal and Rajaraja Chola's 1,000-year-old Great Living Chola Temple in Thanjavur.",
+          image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Ooty Nilgiri Mountain Railway & Kodaikanal",
+          tag: "Queen of Hill Stations • Blue Mountains",
+          desc: "Eucalyptus-scented Nilgiri peaks, botanical gardens, star-shaped Kodaikanal Lake, and the UNESCO rack-and-pinion mountain steam train.",
+          image: "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Andhra Pradesh": [
+        {
+          name: "Araku Valley & Borra Caves, Visakhapatnam",
+          tag: "Eastern Ghats Coffee Hills & Karst Caves",
+          desc: "Scenic glass-dome train journeys through 58 tunnels to misty organic coffee plantations and million-year-old stalactite limestone caverns.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Gandikota Canyon & Lepakshi Temple",
+          tag: "The Grand Canyon of India • Pennar Gorge",
+          desc: "Spectacular red-granite gorges carved by the Pennar River below a 13th-century fort, paired with the famous hanging pillar of Vijayanagara-era Lepakshi.",
+          image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Tirumala Venkateswara Temple & Rushikonda Beach",
+          tag: "Seven Hills of Seshachalam & Golden Coast",
+          desc: "One of the world's most visited sacred hilltop shrines nestled in the Eastern Ghats alongside the Blue Flag golden sands of Visakhapatnam.",
+          image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Telangana": [
+        {
+          name: "Charminar & Chowmahalla Palace, Hyderabad",
+          tag: "City of Pearls • 1591 Qutb Shahi Landmark",
+          desc: "Hyderabad's iconic four-minaret granite monument surrounded by Laad Bazaar pearl markets and the chandeliered Nizam halls of Chowmahalla Palace.",
+          image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Golconda Fort & Qutb Shahi Tombs",
+          tag: "Acoustic Citadel & Diamond Capital",
+          desc: "A colossal granite fortress famed for its ingenious acoustic warning system, Fateh Rahben cannons, and the domed garden tombs of seven sultans.",
+          image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Ramappa Temple & Thousand Pillar Temple, Warangal",
+          tag: "UNESCO World Heritage • Kakatiya Dynasty",
+          desc: "Built in 1213 CE with floating porous bricks and intricate black-basalt carvings that showcase the pinnacle of Kakatiya sculptural artistry.",
+          image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Sikkim": [
+        {
+          name: "Tsomgo Lake & Nathula Pass",
+          tag: "Glacial Alpine Lake • 3,753m",
+          desc: "A sacred high-altitude oval lake reflecting snow-clad peaks along the historic Indo-Tibetan Silk Route, surrounded by blooming rhododendrons and yaks.",
+          image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Yumthang Valley & Gurudongmar Lake",
+          tag: "Valley of Flowers • 5,430m",
+          desc: "North Sikkim's breathtaking alpine sanctuary where crystal-clear glacial rivers wind past hot springs, meadows, and one of the highest lakes in the world.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Rumtek Monastery & Buddha Park, Ravangla",
+          tag: "Kanchenjunga Panorama • Heritage",
+          desc: "Home to the towering 130-foot golden statue of Lord Buddha at Ravangla and ornate Tibetan monastic shrines framed by Mount Kanchenjunga.",
+          image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Assam": [
+        {
+          name: "Kaziranga National Park",
+          tag: "UNESCO World Heritage • One-Horned Rhino",
+          desc: "Sprawling elephant-grass floodplains and marshes along the Brahmaputra that shelter two-thirds of the world's great Indian one-horned rhinoceroses.",
+          image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Majuli River Island & Jorhat Tea Estates",
+          tag: "World's Largest River Island",
+          desc: "Cradled by the mighty Brahmaputra, Majuli is celebrated for its 15th-century Neo-Vaishnavite Satras, mask-making crafts, and lush Assam tea gardens.",
+          image: "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Kamakhya Temple & Umananda Island, Guwahati",
+          tag: "Sacred Nilachal Hill Shrine",
+          desc: "One of India's most revered ancient Shakti Peethas overlooking the Brahmaputra River and the peacock-shaped Umananda island temple.",
+          image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Manipur": [
+        {
+          name: "Loktak Lake & Keibul Lamjao",
+          tag: "World's Only Floating National Park",
+          desc: "Famous for its circular floating biomass islands (phumdis) and the rare dancing Sangai brow-antlered deer amidst mirror-like freshwater vistas.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Kangla Fort & Ima Keithel, Imphal",
+          tag: "Ancient Royal Seat • Women's Market",
+          desc: "The historic palace citadel of Meitei rulers flanked by twin white Kangla Sha dragon statues, near Asia's iconic 500-year-old all-women market.",
+          image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Shirui Kashong Peak & Ukhrul Hills",
+          tag: "Home of the Rare Shirui Lily",
+          desc: "Misty emerald mountain ridges in Ukhrul where the endangered pinkish-white Shirui Lily blooms across velvet bamboo hills every monsoon.",
+          image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Mizoram": [
+        {
+          name: "Vantawng Waterfalls, Thenzawl",
+          tag: "Highest Waterfall in Mizoram • 229m",
+          desc: "A majestic two-tiered cascade plunging through dense tropical bamboo groves and lush montane rainforests in Serchhip district.",
+          image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Reiek Tlang & Solomon's Temple, Aizawl",
+          tag: "Misty Mountain Peak • 1,465m",
+          desc: "Sweeping cliffside viewpoints overlooking Aizawl's cloud-kissed ridges, traditional Mizo heritage villages, and the gleaming white marble Solomon's Temple.",
+          image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Phawngpui (Blue Mountain) National Park",
+          tag: "Highest Peak in Mizoram • 2,157m",
+          desc: "Revered as the abode of the gods, featuring dramatic semicircular cliffs, rare orchids, rhododendrons, and Blyth's tragopan sanctuaries.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "West Bengal": [
+        {
+          name: "Darjeeling & Tiger Hill",
+          tag: "Queen of the Hills • 2,042m",
+          desc: "Famous for sweeping tea plantations, the UNESCO Darjeeling Himalayan Toy Train, and dawn views of Mount Kanchenjunga glowing golden in the morning light.",
+          image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Victoria Memorial, Kolkata",
+          tag: "White Marble Palace • Heritage",
+          desc: "An architectural marvel in Kolkata crafted from white Makrana marble, surrounded by lush landscaped gardens, reflecting pools, and historical galleries.",
+          image: "https://images.unsplash.com/photo-1558431382-27e303142255?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Sundarbans National Park",
+          tag: "UNESCO Mangrove Delta • Wildlife",
+          desc: "The world's largest coastal mangrove forest network, crisscrossed by tidal waterways and home to the Royal Bengal Tiger, estuarine crocodiles, and spotted deer.",
+          image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Howrah Bridge & Hooghly Ghats",
+          tag: "Iconic Cantilever Bridge",
+          desc: "Suspended without nuts or bolts over the Hooghly River, offering panoramic sunset views of ferry cruises, cable-stayed Vidyasagar Setu, and flower bazaars.",
+          image: "https://images.unsplash.com/photo-1588416936097-41850ab3d86d?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Andaman and Nicobar Islands": [
+        {
+          name: "Radhanagar Beach, Havelock",
+          tag: "Asia's Best Beach • Swaraj Dweep",
+          desc: "Renowned for powdery white sands, turquoise waters, and lush tropical mahua rainforest borders offering spectacular sunsets over the Andaman Sea.",
+          image: "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Cellular Jail, Port Blair",
+          tag: "Historic Freedom Monument",
+          desc: "The iconic colonial prison where freedom fighters were exiled, known for its poignant sound-and-light show, historic watchtower, and coastal battlements.",
+          image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Elephant Beach & Coral Reefs",
+          tag: "Snorkeling & Water Sports",
+          desc: "A vibrant marine paradise famed for shallow living coral reefs, sea-walking, scuba diving, and clear turquoise waters bustling with tropical fish.",
+          image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Odisha": [
+        {
+          name: "Konark Sun Temple",
+          tag: "UNESCO World Heritage • 13th Century",
+          desc: "A stone chariot monument dedicated to the Sun God Surya, celebrated worldwide for its 24 intricately sculpted stone wheels and temple friezes.",
+          image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Puri Golden Beach & Jagannath",
+          tag: "Sacred Coastal Shrine",
+          desc: "Famous for the historic Jagannath Temple Rath Yatra festival, golden Bay of Bengal waves, sand art installations, and fresh coastal seafood.",
+          image: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Chilika Lake & Irrawaddy Dolphins",
+          tag: "Asia's Largest Brackish Lagoon",
+          desc: "A sprawling wetland sanctuary sheltering migratory flamingo flocks, island temples, and rare playful Irrawaddy dolphins around Satapada.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Lakshadweep": [
+        {
+          name: "Agatti Island Lagoon",
+          tag: "Airstrip Over The Sea • Coral Atoll",
+          desc: "India's most breathtaking island runway surrounded entirely by luminescent turquoise lagoons, coral gardens, kayaking, and reef diving.",
+          image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Bangaram Atoll",
+          tag: "Pristine Uninhabited Island",
+          desc: "A tear-shaped coral haven with crystal-clear calm lagoons, bioluminescent night plankton, deep-sea diving, and serene coconut palm fringes.",
+          image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Minicoy Island & Lighthouse",
+          tag: "Southernmost Atoll • Heritage",
+          desc: "Famous for its 300-foot British-era white stone lighthouse offering panoramic 360-degree views over the endless azure Arabian Sea and coral barrier reefs.",
+          image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Jammu and Kashmir": [
+        {
+          name: "Dal Lake, Srinagar",
+          tag: "Shikara Rides & Floating Gardens",
+          desc: "The jewel of Kashmir, dotted with carved cedarwood houseboats, blooming lotus gardens, and traditional wooden shikaras framed by the Zabarwan mountains.",
+          image: "https://images.unsplash.com/photo-1566837945700-30057527ade0?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Gulmarg Gondola & Snow Meadows",
+          tag: "Meadow of Flowers • 3,980m",
+          desc: "One of the highest cable cars in the world, whisking visitors up to Mount Apharwat for world-class skiing, snowshoeing, and Himalayan panoramas.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Pahalgam & Betaab Valley",
+          tag: "Valley of Shepherds • Lidder River",
+          desc: "Crisp pine forests and babbling glacial streams surrounded by snow peaks, serving as the base for the Amarnath pilgrimage and scenic horse treks.",
+          image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Ladakh": [
+        {
+          name: "Pangong Tso Lake",
+          tag: "Color-Changing High Altitude Lake • 4,225m",
+          desc: "Stretching across the Himalayas, this crystal saltwater lake shifts shades between azure, turquoise, and cobalt blue against golden mountain ridges.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Nubra Valley & Hunder Sand Dunes",
+          tag: "Cold Desert • Double-Humped Camels",
+          desc: "Reached via the high Khardung La pass, Nubra features white desert dunes, Bactrian camel safaris, and the towering Maitreya Buddha at Diskit Monastery.",
+          image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Thiksey & Hemis Monasteries, Leh",
+          tag: "Cliffside Tibetan Buddhist Gompas",
+          desc: "Twelve-story hilltop monastic complexes overlooking the Indus Valley, celebrated for masked Cham dances, prayer wheels, and golden stupas.",
+          image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Himachal Pradesh": [
+        {
+          name: "Manali & Solang Valley",
+          tag: "Valley of the Gods • Adventure Hub",
+          desc: "A paradise for paragliding, skiing, and snow activities, flanked by the Rohtang Pass, Beas River rapids, and hot sulphur springs in Vashisht.",
+          image: "https://images.unsplash.com/photo-1605649487212-47bdab064df8?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Spiti Valley & Key Monastery",
+          tag: "Middle Land • Tibetan Culture",
+          desc: "A high-altitude mountain valley famous for the 1,000-year-old Key Monastery perched atop conical cliffs, fossil villages, and stark moonscape beauty.",
+          image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Shimla Mall Road & Ridge",
+          tag: "Colonial Summer Capital",
+          desc: "Famous for neo-Gothic Christ Church architecture, deodar cedar mountain trails, and the scenic Kalka-Shimla mountain toy railway.",
+          image: "https://images.unsplash.com/photo-1571536802807-30451e3955d8?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Uttarakhand": [
+        {
+          name: "Rishikesh & Lakshman Jhula",
+          tag: "Yoga Capital of the World",
+          desc: "Set where the emerald Ganga leaves the Himalayas, celebrated for evening Ganga Aarti rituals, suspension bridges, yoga ashrams, and white-water rafting.",
+          image: "https://images.unsplash.com/photo-1518002171953-a080ee817e1f?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Nainital & Naini Lake",
+          tag: "Lake District of India",
+          desc: "An eye-shaped mountain lake surrounded by steep emerald peaks, offering wooden yacht sailing, ropeway rides to Snow View point, and misty promenades.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Kedarnath & Valley of Flowers",
+          tag: "Sacred Peak & Alpine Flora",
+          desc: "A high-altitude glacial sanctuary and revered shrine nestled against snow walls, bursting with thousands of rare alpine wildflowers and medicinal herbs.",
+          image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Uttar Pradesh": [
+        {
+          name: "Taj Mahal, Agra",
+          tag: "Wonder of the World • UNESCO Heritage",
+          desc: "An immortal monument of love crafted from ivory-white Makrana marble on the banks of the Yamuna, inlaid with semi-precious pietra dura gemstones.",
+          image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Dashashwamedh Ghat, Varanasi",
+          tag: "Spiritual Capital of India",
+          desc: "One of the world's oldest living cities, where thousands of brass oil lamps illuminate the sacred River Ganga during the mesmerizing evening Ganga Aarti.",
+          image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Bara Imambara, Lucknow",
+          tag: "Nawabi Architecture • Bhool Bhulaiya",
+          desc: "Famous for its grand central arched hall built without beams or girders and its intricate rooftop labyrinth (Bhool Bhulaiya) overlooking Lucknow.",
+          image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Bihar": [
+        {
+          name: "Mahabodhi Temple, Bodh Gaya",
+          tag: "UNESCO World Heritage • Sacred Bodhi Tree",
+          desc: "The sacred site where Lord Buddha attained enlightenment beneath the Bodhi Tree, featuring a 55-meter pyramidal brick spire and tranquil lotus ponds.",
+          image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Ancient Nalanda University Ruins",
+          tag: "5th Century Seat of Learning",
+          desc: "Red-brick monastic plazas, stupas, and lecture halls of the world's first residential international university that once hosted 10,000 scholars.",
+          image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Rajgir Glass Bridge & Vishwa Shanti Stupa",
+          tag: "Surrounded by Five Sacred Hills",
+          desc: "Home to the gleaming white Peace Pagoda atop Ratnagiri Hill reached by aerial ropeway and India's thrilling sky-walk glass bridge amidst lush valleys.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Goa": [
+        {
+          name: "Palolem & Baga Beaches",
+          tag: "Arabian Sea Coastline • Sunset Cruises",
+          desc: "Crescent-shaped palm bays, vibrant beach shacks, parasailing, and golden Arabian Sea sunsets stretching from North to South Goa.",
+          image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Basilica of Bom Jesus, Old Goa",
+          tag: "UNESCO Heritage • Baroque Architecture",
+          desc: "Built in 1605 with laterite stone and gilded altars, this iconic basilica exemplifies Portuguese colonial heritage and timeless artistry.",
+          image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Dudhsagar Waterfalls",
+          tag: "Sea of Milk • Four-Tiered Cascade",
+          desc: "Plunging 310 meters down the lush Western Ghats cliffs beside a dramatic stone railway viaduct surrounded by Bhagwan Mahaveer Wildlife Sanctuary.",
+          image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Jharkhand": [
+        {
+          name: "Hundru & Dassam Waterfalls, Ranchi",
+          tag: "City of Waterfalls • Subarnarekha River",
+          desc: "Spectacular multi-stage cascades plunging over ancient Chota Nagpur granite ledges into foaming natural rock pools surrounded by sal forests.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Betla National Park & Palamu Fort",
+          tag: "Wild Elephants & Forest Citadels",
+          desc: "One of India's earliest tiger reserves, teeming with wild elephants, bison, and 16th-century Chero dynasty stone forts hidden deep inside the jungle.",
+          image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Netarhat & Patratu Valley",
+          tag: "Queen of Chota Nagpur • Hairpin Curves",
+          desc: "Famous for its winding S-curve mountain highway overlooking Patratu Dam reservoir and crimson pine sunrises at Magnolia Point.",
+          image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Madhya Pradesh": [
+        {
+          name: "Khajuraho Group of Monuments",
+          tag: "UNESCO World Heritage • Chandela Art",
+          desc: "Renowned for Nagara-style sandstone temples adorned with thousands of graceful, intricately carved celestial sculptures.",
+          image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Sanchi Stupa & Toranas",
+          tag: "3rd Century BCE Buddhist Monument",
+          desc: "Commissioned by Emperor Ashoka, the Great Stupa features four ceremonial carved gateways depicting Jataka tales of the Buddha's life.",
+          image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Bhedaghat Marble Rocks & Kanha",
+          tag: "Narmada Gorge & Tiger Sanctuary",
+          desc: "Soaring magnesium-limestone cliffs flanking the Narmada River alongside Dhuandhar Falls and the lush sal meadows of Kanha Tiger Reserve.",
+          image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Chhattisgarh": [
+        {
+          name: "Chitrakote Waterfalls, Bastar",
+          tag: "The Niagara of India • Indravati River",
+          desc: "India's widest horseshoe-shaped waterfall, thundering 300 meters wide across the Indravati River amidst misty rainbows and lush tribal heartlands.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Kanger Valley & Kutumsar Caves",
+          tag: "Subterranean Stalactite Wonders",
+          desc: "A dense biosphere reserve sheltering Tirathgarh tiered falls and prehistoric underground limestone caverns filled with echoing stalagmite pillars.",
+          image: "https://images.unsplash.com/photo-1518002171953-a080ee817e1f?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Bhoramdeo & Sirpur Heritage",
+          tag: "11th Century Stone Temple Complex",
+          desc: "Cradled by the Maikal mountain range, these intricately sculpted stone temples and ancient Buddhist viharas showcase central India's temple craft.",
+          image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Maharashtra": [
+        {
+          name: "Ajanta & Ellora Caves, Sambhajinagar",
+          tag: "UNESCO Rock-Cut Monoliths",
+          desc: "Thirty-four monasteries and temples—including the awe-inspiring monolithic Kailasa Temple—carved top-down out of solid Sahyadri basalt cliffs.",
+          image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Gateway of India & Marine Drive, Mumbai",
+          tag: "The Queen's Necklace • Arabian Sea",
+          desc: "Mumbai's iconic basalt triumphal arch overlooking harbour yachts, paired with the sweeping art-deco promenade of Marine Drive.",
+          image: "https://images.unsplash.com/photo-1566552881560-0be862a7c445?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Lonavala & Mahabaleshwar Ghats",
+          tag: "Misty Sahyadri Hill Forts",
+          desc: "Emerald monsoon plateaus, cloud-wrapped Maratha hill citadels like Raigad and Rajmachi, and strawberry valleys perched high in the Western Ghats.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Gujarat": [
+        {
+          name: "Great Rann of Kutch",
+          tag: "White Salt Desert • Rann Utsav",
+          desc: "One of the largest salt deserts in the world, glowing like silver under the full moon with vibrant Kutchi embroidery, folk music, and tent cities.",
+          image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Statue of Unity & Rani ki Vav",
+          tag: "World's Tallest Statue & UNESCO Stepwell",
+          desc: "Home to the 182-meter tribute to Sardar Vallabhbhai Patel on the Narmada River and the 11th-century subterranean Queen's Stepwell in Patan.",
+          image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Gir National Park & Somnath",
+          tag: "Sole Home of the Asiatic Lion",
+          desc: "Dry deciduous teak forests sheltering the majestic Asiatic lion alongside the sacred coastal Somnath jyotirlinga temple overlooking the Arabian Sea.",
+          image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Rajasthan": [
+        {
+          name: "Amber Fort & Hawa Mahal, Jaipur",
+          tag: "The Pink City • Rajput Citadel",
+          desc: "Overlooking Maota Lake, this majestic 16th-century fortress features the glimmering Sheesh Mahal (Mirror Palace) alongside Jaipur's 953-window Palace of Winds.",
+          image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Lake Pichola & City Palace, Udaipur",
+          tag: "City of Lakes • Venice of the East",
+          desc: "An enchanting lake flanked by the grand City Palace, floating marble Lake Palace, and lakeside sunset ghats backdropped by the Aravalli hills.",
+          image: "https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Jaisalmer Fort & Sam Sand Dunes",
+          tag: "The Golden Living Fort • Thar Desert",
+          desc: "A golden yellow sandstone citadel rising from the Thar Desert with camel safaris and Kalbelia folk performances beneath starlit dunes.",
+          image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Punjab": [
+        {
+          name: "Golden Temple (Sri Harmandir Sahib)",
+          tag: "Amritsar • Sacred Amrit Sarovar",
+          desc: "Covered in gleaming gold leaf and white marble, its reflection shimmers in the holy nectar pool while the world's largest community kitchen (Langar) welcomes all.",
+          image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Attari-Wagah Border Ceremony",
+          tag: "Beating Retreat Pageantry",
+          desc: "An electrifying daily sunset flag-lowering ceremony filled with patriotic chants, synchronized marching drills, and high-spirited crowds.",
+          image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Qila Mubarak, Patiala & Anandpur Sahib",
+          tag: "Royal Sikh Architecture & Heritage",
+          desc: "Grand fortress palaces, mirror-work chambers, and the historic birthplace of the Khalsa surrounded by the Shivalik foothills.",
+          image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Haryana": [
+        {
+          name: "Brahma Sarovar, Kurukshetra",
+          tag: "Land of the Bhagavad Gita",
+          desc: "One of Asia's largest man-made sacred water tanks, glowing with thousands of oil lamps and flanked by golden chariot monuments of Krishna and Arjuna.",
+          image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Yadavindra Gardens, Pinjore & Morni Hills",
+          tag: "17th Century Terraced Mughal Gardens",
+          desc: "Seven cascading levels of fountains, pavilions, and illuminated waterways nestled at the foot of Haryana's scenic Morni Hills.",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Sultanpur National Park",
+          tag: "Ramsar Wetland Bird Sanctuary",
+          desc: "A serene wetland haven welcoming over 250 species of resident and migratory birds from Siberia, Europe, and Central Asia every winter.",
+          image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      "Delhi": [
+        {
+          name: "India Gate & Kartavya Path",
+          tag: "Iconic 42m Sandstone War Memorial",
+          desc: "Standing at the ceremonial heart of New Delhi, illuminated in tricolour lights and surrounded by fountains and manicured lawns.",
+          image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Red Fort (Lal Qila) & Qutub Minar",
+          tag: "UNESCO World Heritage Monuments",
+          desc: "Shah Jahan's colossal red sandstone citadel in Old Delhi paired with the 73-meter fluted victory tower of Qutub Minar.",
+          image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: "Lotus Temple & Humayun's Tomb",
+          tag: "Architectural Masterpieces",
+          desc: "Twenty-seven free-standing white marble petals shaped like a blooming lotus flower, alongside the garden-tomb that inspired the Taj Mahal.",
+          image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=900&q=80"
+        }
+      ]
+    };
+
+    function getTouristPlacesForState(stateName) {
+      const canonical = normalizeStateKey(stateName);
+      if (stateTouristDestinations[canonical]) {
+        return stateTouristDestinations[canonical];
+      }
+      return [
+        {
+          name: `${canonical} Heritage & Architecture`,
+          tag: "Historical Landmark • Culture",
+          desc: `Discover the monumental stone architecture, royal palaces, and sacred shrines that define the ancient history of ${canonical}.`,
+          image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: `${canonical} Scenic Landscapes & Nature`,
+          tag: "Nature Reserve • Mountains & Rivers",
+          desc: `Explore the untouched natural beauty, cascading waterfalls, and lush forest valleys spanning across ${canonical}.`,
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          name: `${canonical} Culture & Traditional Bazaars`,
+          tag: "Living Heritage • Culinary Delights",
+          desc: `Immerse yourself in regional handicrafts, classical music, festive dance forms, and traditional cuisine celebrated across ${canonical}.`,
+          image: "https://images.unsplash.com/photo-1588416936097-41850ab3d86d?auto=format&fit=crop&w=900&q=80"
+        }
+      ];
+    }
+
+    // ================= 4. EXTRACT YOUTUBE ID & BUILD SAFE EMBED =================
+    function extractYouTubeId(input) {
+      if (!input) return null;
+      const trimmed = input.trim();
+      const iframeMatch = trimmed.match(/src=["']([^"']+)["']/i);
+      const url = iframeMatch ? iframeMatch[1] : trimmed;
+
+      const embedMatch = url.match(/youtube(?:-nocookie)?\.com\/embed\/([a-zA-Z0-9_-]{11})/);
+      if (embedMatch) return embedMatch[1];
+
+      const watchMatch = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+      if (watchMatch) return watchMatch[1];
+
+      const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+      if (shortMatch) return shortMatch[1];
+
+      return null;
+    }
+
+    function buildSafeYouTubeEmbedUrl(videoId) {
+      const isLocalFile = window.location.protocol === 'file:';
+      if (isLocalFile) {
+        const innerEmbed = `https://www.youtube.com/embed/${videoId}?feature=oembed&autoplay=1&vq=hd1080&hd=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&enablejsapi=1`;
+        const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
+        const thumbUrl = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+        return `https://cdn.embedly.com/widgets/media.html?src=${encodeURIComponent(innerEmbed)}&display_name=YouTube&url=${encodeURIComponent(watchUrl)}&image=${encodeURIComponent(thumbUrl)}&type=text%2Fhtml&schema=youtube`;
+      }
+      const originParam = window.location.origin && window.location.origin !== 'null'
+        ? `&origin=${encodeURIComponent(window.location.origin)}`
+        : '';
+      return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&vq=hd1080&hd=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&enablejsapi=1${originParam}`;
+    }
+
+    function force1080pAndPlayOnLoad(iframeEl) {
+      if (!iframeEl || !iframeEl.contentWindow) return;
+      iframeEl.contentWindow.postMessage(JSON.stringify({
+        context: "player.js",
+        version: "0.0.11",
+        method: "play"
+      }), "*");
+      const ytCmds = [
+        { event: "command", func: "setPlaybackQualityRange", args: ["hd1080", "hd1080"] },
+        { event: "command", func: "setPlaybackQuality", args: ["hd1080"] },
+        { event: "command", func: "playVideo", args: [] }
+      ];
+      ytCmds.forEach(cmd => {
+        iframeEl.contentWindow.postMessage(JSON.stringify(cmd), "*");
+      });
+    }
+
+    // ================= 5. GENERATE STATE SILHOUETTE CUTOUT =================
+    const stateGeoFeatures = {};
+
+    function generateStateCutoutSVG(stateName, fillColor) {
+      const canonical = normalizeStateKey(stateName);
+      const feature = stateGeoFeatures[canonical] || stateGeoFeatures[stateName] || stateGeoFeatures["Jammu and Kashmir"];
+      if (!feature || !feature.geometry) {
+        return `<svg viewBox="0 0 100 100"><polygon points="50,8 92,50 50,92 8,50" fill="${fillColor}" stroke="#E8A86B" stroke-width="4"/></svg>`;
+      }
+
+      const geom = feature.geometry;
+      const rings = [];
+
+      if (geom.type === "Polygon") {
+        geom.coordinates.forEach(ring => rings.push(ring));
+      } else if (geom.type === "MultiPolygon") {
+        geom.coordinates.forEach(poly => poly.forEach(ring => rings.push(ring)));
+      }
+
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      rings.forEach(ring => {
+        ring.forEach(([lng, lat]) => {
+          if (lng < minX) minX = lng;
+          if (lng > maxX) maxX = lng;
+          if (lat < minY) minY = lat;
+          if (lat > maxY) maxY = lat;
+        });
+      });
+
+      const width = maxX - minX || 1;
+      const height = maxY - minY || 1;
+      const pad = 8;
+      const scale = (100 - pad * 2) / Math.max(width, height);
+      const offsetX = (100 - width * scale) / 2;
+      const offsetY = (100 - height * scale) / 2;
+
+      let pathData = "";
+      rings.forEach(ring => {
+        ring.forEach(([lng, lat], idx) => {
+          const x = (offsetX + (lng - minX) * scale).toFixed(1);
+          const y = (100 - (offsetY + (lat - minY) * scale)).toFixed(1);
+          pathData += (idx === 0 ? `M${x},${y}` : `L${x},${y}`);
+        });
+        pathData += "Z ";
+      });
+
+      return `
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path d="${pathData}" fill="${fillColor}" stroke="#E8A86B" stroke-width="2.5" stroke-linejoin="round" />
+        </svg>
+      `;
+    }
+
+    // ================= 6. INITIALIZE MAP (INCREASED SIZE / ZOOM) =================
+    const DEFAULT_MAP_CENTER = [22.2, 82.5];
+    const DEFAULT_MAP_ZOOM = 5.0;
+
+    const map = L.map('southAsiaMap', {
+      center: DEFAULT_MAP_CENTER,
+      zoom: DEFAULT_MAP_ZOOM,
+      zoomSnap: 0.1,
+      minZoom: 4.2,
+      maxZoom: 9,
+      zoomControl: false,
+      scrollWheelZoom: false,
+      attributionControl: false
+    });
+
+    let indiaLayer;
+    let activeStateName = null;
+
+    fetch('https://gist.githubusercontent.com/jbrobst/56c13bbbf9d97d187fea01ca62ea5112/raw/e388c4cae20aa53cb5090210a42ebb9b765c0a36/india_states.geojson')
+      .then(res => res.json())
+      .then(indiaData => {
+        indiaLayer = L.geoJSON(indiaData, {
+          style: (feature) => {
+            const rawName = feature.properties.ST_NM || "";
+            const stName = normalizeStateKey(rawName);
+            const info = getStateData(stName);
+            const isIsland = stName.includes("Andaman") || stName.includes("Lakshadweep");
+            return {
+              fillColor: info.color,
+              fillOpacity: isIsland ? 1 : 0.9,
+              color: isIsland ? "#E8A86B" : "#001133",
+              weight: isIsland ? 2.5 : 1.4,
+              opacity: 1
+            };
+          },
+          onEachFeature: (feature, layer) => {
+            const rawName = feature.properties.ST_NM || "Indian State";
+            const stateName = normalizeStateKey(rawName);
+
+            stateGeoFeatures[rawName] = feature;
+            stateGeoFeatures[stateName] = feature;
+            if (stateName === "Jammu and Kashmir") {
+              stateGeoFeatures["Ladakh"] = feature;
+            }
+
+            const info = getStateData(stateName);
+
+            layer.bindTooltip(
+              stateName === "Jammu and Kashmir"
+                ? "Jammu & Kashmir (West) • Ladakh (East)"
+                : `${stateName} • ${info.zone}`,
+              {
+                sticky: true,
+                className: "climate-tooltip"
+              }
+            );
+
+            layer.on({
+              mouseover: (e) => {
+                const target = e.target;
+                target.setStyle({
+                  weight: 2.6,
+                  color: "#fdf8f4",
+                  fillOpacity: 1
+                });
+                target.bringToFront();
+              },
+              mouseout: (e) => {
+                indiaLayer.resetStyle(e.target);
+              },
+              click: (e) => {
+                L.DomEvent.stopPropagation(e);
+                let chosenState = stateName;
+                if (stateName === "Jammu and Kashmir" && e.latlng && e.latlng.lng >= 76.2) {
+                  chosenState = "Ladakh";
+                }
+                map.fitBounds(e.target.getBounds(), {
+                  paddingTopLeft: [30, 30],
+                  paddingBottomRight: [460, 30],
+                  maxZoom: 6.8
+                });
+                playStateVideo(chosenState);
+              }
+            });
+          }
+        }).addTo(map);
+      });
+
+    // ================= 7. ISLAND HIGHLIGHT MARKERS (LAKSHADWEEP & ANDAMAN ONLY) =================
+    function createIslandBeacon(label) {
+      return L.divIcon({
+        className: 'island-beacon-custom',
+        html: `
+          <div class="island-beacon-wrap">
+            <div class="island-pulse-ring"></div>
+            <span class="island-beacon-label">✨ ${label}</span>
+          </div>
+        `,
+        iconSize: [120, 80],
+        iconAnchor: [60, 40]
+      });
+    }
+
+    const lakshadweepMarker = L.marker([10.5667, 72.6417], {
+      icon: createIslandBeacon('Lakshadweep')
+    }).addTo(map);
+
+    lakshadweepMarker.on('click', (e) => {
+      L.DomEvent.stopPropagation(e);
+      focusLakshadweep();
+    });
+
+    const andamanMarker = L.marker([11.7401, 92.6586], {
+      icon: createIslandBeacon('Andaman & Nicobar')
+    }).addTo(map);
+
+    andamanMarker.on('click', (e) => {
+      L.DomEvent.stopPropagation(e);
+      focusAndaman();
+    });
+
+    // =========================================================================================
+    // 8. PER-STATE STAR RATING, PUBLIC REVIEWS & GISCUS COMMENT SYSTEM
+    // =========================================================================================
+    const GISCUS_CONFIG = {
+      repo: "[ENTER REPO HERE]",
+      repoId: "[ENTER REPO ID HERE]",
+      category: "[ENTER CATEGORY NAME HERE]",
+      categoryId: "[ENTER CATEGORY ID HERE]"
+    };
+
+    const STORAGE_KEY_REVIEWS = "the_india_state_reviews_v1";
+    let currentSelectedStar = 5;
+
+    function loadStoredReviewsMap() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY_REVIEWS);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveStoredReviewsMap(mapObj) {
+      try {
+        localStorage.setItem(STORAGE_KEY_REVIEWS, JSON.stringify(mapObj));
+      } catch (e) {}
+    }
+
+    function getStateReviewRecord(stateName) {
+      const canonical = normalizeStateKey(stateName);
+      const all = loadStoredReviewsMap();
+      if (!all[canonical]) {
+        const places = getTouristPlacesForState(canonical);
+        const firstLandmark = places && places[0] ? places[0].name : canonical;
+        all[canonical] = {
+          baseTotalStars: 118,
+          baseCount: 24,
+          items: [
+            {
+              author: "Aarav Sharma",
+              stars: 5,
+              text: `Breathtaking visuals and unforgettable culture in ${canonical}! ${firstLandmark} is a must-visit.`
+            },
+            {
+              author: "Priya Nair",
+              stars: 5,
+              text: `Loved exploring the scenic landscapes and warm hospitality across ${canonical}.`
+            }
+          ]
+        };
+        saveStoredReviewsMap(all);
+      }
+      return all[canonical];
+    }
+
+    function renderStarButtons(activeStars) {
+      const buttons = document.querySelectorAll('#starButtonsGroup .star-btn');
+      buttons.forEach(btn => {
+        const s = Number(btn.getAttribute('data-star'));
+        btn.classList.toggle('lit', s <= activeStars);
+      });
+    }
+
+    function selectStarRating(stars) {
+      currentSelectedStar = stars;
+      renderStarButtons(currentSelectedStar);
+      document.getElementById('starPromptText').textContent = `Selected: ${stars} / 5 Stars`;
+    }
+
+    function previewStarHover(stars) {
+      renderStarButtons(stars);
+    }
+
+    function restoreStarDisplay() {
+      renderStarButtons(currentSelectedStar);
+    }
+
+    function renderStateReviewsSection(stateName) {
+      const canonical = normalizeStateKey(stateName);
+      const record = getStateReviewRecord(canonical);
+
+      // Compute average star score
+      let userStarsSum = 0;
+      record.items.forEach(item => { userStarsSum += Number(item.stars || 5); });
+      const totalCount = record.baseCount + record.items.length;
+      const totalStars = record.baseTotalStars + userStarsSum;
+      const avg = (totalStars / totalCount).toFixed(1);
+
+      document.getElementById('ratingStateSubtitle').textContent = `Public ratings & reviews for ${canonical}`;
+      document.getElementById('stateAvgRating').textContent = `${avg} ★`;
+      document.getElementById('stateRatingCount').textContent = `(${totalCount} reviews)`;
+
+      currentSelectedStar = 5;
+      renderStarButtons(5);
+      document.getElementById('starPromptText').textContent = 'Tap stars to rate:';
+
+      const listEl = document.getElementById('publicReviewsList');
+      listEl.innerHTML = '';
+
+      record.items.slice().reverse().forEach(rev => {
+        const card = document.createElement('div');
+        card.className = 'public-review-item';
+        const starsStr = '★'.repeat(rev.stars) + '☆'.repeat(5 - rev.stars);
+        card.innerHTML = `
+          <div class="review-item-top">
+            <span class="reviewer-author">${escapeHtml(rev.author)}</span>
+            <span class="reviewer-stars">${starsStr}</span>
+          </div>
+          <p class="reviewer-text">${escapeHtml(rev.text)}</p>
+        `;
+        listEl.appendChild(card);
+      });
+
+      // Reload Giscus Public Comment Thread for this specific state
+      loadGiscusForState(canonical);
+    }
+
+    function submitStateReview(e) {
+      e.preventDefault();
+      if (!activeStateName) return;
+
+      const nameInput = document.getElementById('reviewerNameInput');
+      const commentInput = document.getElementById('reviewerCommentInput');
+      const author = nameInput.value.trim() || "Traveller";
+      const text = commentInput.value.trim();
+      if (!text) return;
+
+      const canonical = normalizeStateKey(activeStateName);
+      const all = loadStoredReviewsMap();
+      const record = getStateReviewRecord(canonical);
+
+      record.items.push({
+        author,
+        stars: currentSelectedStar,
+        text
+      });
+
+      all[canonical] = record;
+      saveStoredReviewsMap(all);
+
+      commentInput.value = '';
+      renderStateReviewsSection(canonical);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function loadGiscusForState(stateName) {
+      const container = document.getElementById('giscusThreadContainer');
+      const badge = document.getElementById('giscusStateTermBadge');
+      if (!container) return;
+
+      badge.textContent = stateName;
+      container.innerHTML = '';
+
+      // Inject the exact Giscus script tag configured for this state
+      const script = document.createElement('script');
+      script.src = "https://giscus.app/client.js";
+      script.setAttribute("data-repo", GISCUS_CONFIG.repo);
+      script.setAttribute("data-repo-id", GISCUS_CONFIG.repoId);
+      script.setAttribute("data-category", GISCUS_CONFIG.category);
+      script.setAttribute("data-category-id", GISCUS_CONFIG.categoryId);
+      script.setAttribute("data-mapping", "specific");
+      script.setAttribute("data-term", `THE INDIA - ${stateName} Reviews`);
+      script.setAttribute("data-strict", "0");
+      script.setAttribute("data-reactions-enabled", "1");
+      script.setAttribute("data-emit-metadata", "0");
+      script.setAttribute("data-input-position", "bottom");
+      script.setAttribute("data-theme", "preferred_color_scheme");
+      script.setAttribute("data-lang", "en");
+      script.setAttribute("crossorigin", "anonymous");
+      script.async = true;
+
+      container.appendChild(script);
+    }
+
+    // ================= 9. VIDEO PLAYBACK & "KNOW MORE [STATE]" CONTROLS =================
+    const stateSidebar = document.getElementById('stateSidebar');
+    const sidebarVideo = document.getElementById('sidebarVideo');
+    const sidebarYoutube = document.getElementById('sidebarYoutube');
+    const sidebarYtDirect = document.getElementById('sidebarYtDirect');
+    const touristPlacesModal = document.getElementById('touristPlacesModal');
+
+    sidebarYoutube.addEventListener('load', () => {
+      force1080pAndPlayOnLoad(sidebarYoutube);
+      setTimeout(() => force1080pAndPlayOnLoad(sidebarYoutube), 500);
+    });
+
+    function loadMediaIntoSidebar(sourceUrl) {
+      const videoId = extractYouTubeId(sourceUrl);
+
+      if (videoId) {
+        sidebarVideo.pause();
+        sidebarVideo.removeAttribute('src');
+        sidebarVideo.load();
+        sidebarVideo.style.display = 'none';
+
+        sidebarYoutube.style.display = 'block';
+        sidebarYoutube.src = buildSafeYouTubeEmbedUrl(videoId);
+
+        sidebarYtDirect.href = `https://www.youtube.com/watch?v=${videoId}&vq=hd1080`;
+        sidebarYtDirect.style.display = 'inline-block';
+      } else {
+        sidebarYoutube.src = '';
+        sidebarYoutube.style.display = 'none';
+        sidebarYtDirect.style.display = 'none';
+
+        sidebarVideo.style.display = 'block';
+        sidebarVideo.pause();
+        sidebarVideo.src = sourceUrl;
+        sidebarVideo.currentTime = 0;
+        sidebarVideo.muted = false;
+        sidebarVideo.volume = 1.0;
+        sidebarVideo.play().catch(() => {
+          sidebarVideo.muted = false;
+        });
+      }
+    }
+
+    function playStateVideo(rawStateName) {
+      const stateName = normalizeStateKey(rawStateName);
+      const info = getStateData(stateName);
+      activeStateName = stateName;
+
+      touristPlacesModal.classList.remove('open');
+
+      document.getElementById('sidebarClimateBadge').textContent = info.zone;
+      document.getElementById('sidebarStateTitle').textContent = stateName;
+      document.getElementById('sidebarStateDesc').textContent = info.desc;
+
+      const cutoutSvgMarkup = generateStateCutoutSVG(stateName, info.color);
+      document.getElementById('smallStateCutoutSvg').innerHTML = cutoutSvgMarkup;
+      document.getElementById('cutoutStateLabel').textContent = stateName;
+
+      stateSidebar.classList.add('active');
+      loadMediaIntoSidebar(info.video);
+
+      // Update Star Rating, Public Reviews & Giscus Thread under the video
+      renderStateReviewsSection(stateName);
+    }
+
+    // ================= 10. OPEN & RENDER BEST TOURIST PLACES WINDOW =================
+    function openTouristPlacesModal() {
+      if (!activeStateName) return;
+      const info = getStateData(activeStateName);
+      const places = getTouristPlacesForState(activeStateName);
+
+      sidebarVideo.pause();
+      sidebarYoutube.src = '';
+
+      document.getElementById('modalHeaderCutout').innerHTML = generateStateCutoutSVG(activeStateName, info.color);
+      document.getElementById('placesModalStateTitle').textContent = `Best Tourist Places in ${activeStateName}`;
+      document.getElementById('placesModalSubtitle').textContent = `${info.zone} • Handpicked must-visit destinations & iconic scenic spots`;
+
+      const container = document.getElementById('touristCardsContainer');
+      container.innerHTML = '';
+
+      places.forEach(place => {
+        const card = document.createElement('div');
+        card.className = 'place-photo-card';
+        card.style.backgroundImage = `url('${place.image}')`;
+
+        card.innerHTML = `
+          <div class="place-card-overlay"></div>
+          <div class="place-card-content">
+            <span class="place-category-badge">${place.tag}</span>
+            <h3 class="place-name">${place.name}</h3>
+            <p class="place-description">${place.desc}</p>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      touristPlacesModal.classList.add('open');
+    }
+
+    function closeTouristPlacesModal() {
+      touristPlacesModal.classList.remove('open');
+      if (activeStateName) {
+        const info = getStateData(activeStateName);
+        loadMediaIntoSidebar(info.video);
+      }
+    }
+
+    function stopAndCloseVideo() {
+      activeStateName = null;
+      stateSidebar.classList.remove('active');
+      touristPlacesModal.classList.remove('open');
+
+      sidebarVideo.pause();
+      sidebarVideo.currentTime = 0;
+      sidebarVideo.removeAttribute('src');
+      sidebarVideo.load();
+      sidebarYoutube.src = '';
+      sidebarYtDirect.style.display = 'none';
+    }
+
+    function leaveStateAndReset() {
+      stopAndCloseVideo();
+      map.flyTo(DEFAULT_MAP_CENTER, DEFAULT_MAP_ZOOM, { duration: 1.1 });
+    }
+
+    function focusLakshadweep() {
+      map.flyTo([10.5667, 72.6417], 6.8, { duration: 1.2 });
+      playStateVideo("Lakshadweep");
+    }
+
+    function focusAndaman() {
+      map.flyTo([11.7401, 92.6586], 6.5, { duration: 1.2 });
+      playStateVideo("Andaman and Nicobar Islands");
+    }
+
+    map.on('click', () => {
+      if (activeStateName) {
+        leaveStateAndReset();
+      }
+    });
+
+    map.on('zoomend', () => {
+      if (activeStateName && map.getZoom() <= DEFAULT_MAP_ZOOM) {
+        stopAndCloseVideo();
+      }
+    });
+  </script>
+
+</body>
+</html>
