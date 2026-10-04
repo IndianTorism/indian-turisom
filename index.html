@@ -19,9 +19,13 @@
     :root {
       --navy-indigo: #000080;
       --navy-deep: #000050;
+      --navy-darkest: #000030;
       --gold-peach: #E8A86B;
       --gold-bright: #FFD166;
+      --gold-gradient: linear-gradient(135deg, #FFD166 0%, #E8A86B 55%, #d4883e 100%);
       --white-soft: #fdf8f4;
+      --glass-navy: rgba(0, 0, 75, 0.88);
+      --glass-border-gold: rgba(232, 168, 107, 0.55);
     }
 
     * {
@@ -1467,7 +1471,7 @@
     }
 
     /* =========================================================================
-       FLOATING TRANSPARENT BOTTOM TASKBAR DOCK (INDIVIDUALLY TRANSPARENT ITEMS)
+       FLOATING TRANSPARENT BOTTOM TASKBAR DOCK
        ========================================================================= */
     .bottom-taskbar-dock {
       position: fixed;
@@ -1483,7 +1487,6 @@
       pointer-events: none;
     }
 
-    /* Each item is individually transparent with animated hover lift + glow */
     .taskbar-item-wrap {
       position: relative;
       pointer-events: auto;
@@ -1517,7 +1520,6 @@
       white-space: nowrap;
     }
 
-    /* Animated glowing bottom line on hover */
     .taskbar-btn::after {
       content: '';
       position: absolute;
@@ -1565,6 +1567,29 @@
       box-shadow: 0 0 8px #00b894;
     }
 
+    /* Dock Login Button Avatar Circle */
+    .dock-avatar-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: var(--navy-deep);
+      border: 1.5px solid var(--gold-bright);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .dock-avatar-blank-svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--gold-bright);
+    }
+
     /* ================= TRANSPARENT FLOATING POPOVERS ABOVE TASKBAR ================= */
     .taskbar-popover {
       position: absolute;
@@ -1602,7 +1627,6 @@
       text-align: center;
     }
 
-    /* Language Grid inside Popover */
     .lang-popover-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1634,7 +1658,6 @@
       box-shadow: 0 0 14px rgba(232, 168, 107, 0.35);
     }
 
-    /* Find State Search Popover */
     .state-search-popover {
       min-width: 290px;
     }
@@ -1695,7 +1718,6 @@
       transform: translateX(4px);
     }
 
-    /* Quick SOS Popover */
     .sos-quick-list {
       display: flex;
       flex-direction: column;
@@ -1725,21 +1747,24 @@
       box-shadow: 0 0 14px rgba(232, 168, 107, 0.35);
     }
 
-    /* ================= TRAVELLER LOGIN / ACCOUNT MODAL ================= */
+    /* =====================================================================
+       NAVY BLUE & GOLDEN FLOATING LOGIN MODAL OVERLAY (FROM 2ND CODE)
+       ===================================================================== */
     .login-modal-backdrop {
       position: fixed;
       inset: 0;
-      z-index: 3500;
-      background: rgba(0, 0, 35, 0.68);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      z-index: 5000;
+      background: rgba(0, 0, 40, 0.78);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 20px;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.35s ease;
+      overflow-y: auto;
     }
 
     .login-modal-backdrop.open {
@@ -1747,173 +1772,656 @@
       pointer-events: auto;
     }
 
-    .login-modal-card {
-      width: 100%;
-      max-width: 430px;
-      background: rgba(0, 0, 65, 0.55);
-      backdrop-filter: blur(24px);
-      border: 1.5px solid var(--gold-peach);
-      border-radius: 24px;
-      padding: 2rem;
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 30px rgba(232, 168, 107, 0.3);
-      display: flex;
-      flex-direction: column;
-      gap: 1.1rem;
+    /* Floating Stage */
+    .floating-stage {
       position: relative;
-      transform: translateY(20px) scale(0.95);
-      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      width: 100%;
+      max-width: 460px;
+      z-index: 10;
+      animation: floatBar 5s ease-in-out infinite;
     }
 
-    .login-modal-backdrop.open .login-modal-card {
-      transform: translateY(0) scale(1);
+    .floating-stage:hover,
+    .floating-stage:focus-within {
+      animation-play-state: paused;
     }
 
-    .login-modal-close {
+    .floating-stage::after {
+      content: '';
+      position: absolute;
+      bottom: -32px;
+      left: 10%;
+      right: 10%;
+      height: 26px;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 72%);
+      filter: blur(10px);
+      border-radius: 50%;
+      z-index: -1;
+      animation: shadowPulse 5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes floatBar {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    @keyframes shadowPulse {
+      0%, 100% { transform: scale(1); opacity: 0.85; }
+      50% { transform: scale(0.85); opacity: 0.45; }
+    }
+
+    /* Royal Navy Blue Glass Login Card with Golden Borders */
+    .card-container {
+      position: relative;
+      z-index: 20;
+      width: 100%;
+      background: linear-gradient(155deg, rgba(0, 0, 115, 0.94) 0%, rgba(0, 0, 55, 0.96) 100%);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      border-radius: 28px;
+      padding: 30px 26px;
+      border: 1.5px solid var(--gold-peach);
+      box-shadow:
+        0 30px 60px -12px rgba(0, 0, 0, 0.85),
+        0 0 40px rgba(232, 168, 107, 0.25),
+        inset 0 1px 1px rgba(255, 209, 102, 0.35);
+      color: var(--gold-peach);
+    }
+
+    .card-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 15%;
+      right: 15%;
+      height: 2.5px;
+      background: linear-gradient(90deg, transparent, var(--gold-bright), var(--gold-peach), transparent);
+      opacity: 0.95;
+      pointer-events: none;
+    }
+
+    /* Close Login Popup Button */
+    .close-login-modal {
       position: absolute;
       top: 16px;
       right: 16px;
-      background: transparent;
-      border: 1px solid rgba(232, 168, 107, 0.5);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(0, 0, 50, 0.8);
+      border: 1.5px solid var(--gold-peach);
+      color: var(--gold-bright);
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      z-index: 30;
+    }
+
+    .close-login-modal:hover {
+      background: var(--gold-bright);
+      color: var(--navy-indigo);
+      border-color: var(--gold-bright);
+      transform: rotate(90deg);
+    }
+
+    .brand-title {
+      font-family: 'Cinzel Decorative', serif;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin-bottom: 4px;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, #FFD166 0%, #E8A86B 60%, #fff3d1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+    }
+
+    .brand-subtitle {
+      text-align: center;
+      font-size: 0.82rem;
       color: var(--gold-peach);
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+
+    /* Animated Pill Toggle Tabs in Navy & Gold */
+    .tabs {
+      display: flex;
+      position: relative;
+      background: rgba(0, 0, 42, 0.82);
+      border: 1px solid rgba(232, 168, 107, 0.45);
+      border-radius: 16px;
+      padding: 5px;
+      margin-bottom: 18px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--gold-peach);
+      padding: 10px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+      position: relative;
+      z-index: 3;
+      transition: color 0.3s ease;
+    }
+
+    .tab-btn.active {
+      color: var(--navy-indigo);
+    }
+
+    .tab-indicator {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: calc(50% - 5px);
+      height: calc(100% - 10px);
+      background: var(--gold-gradient);
+      border-radius: 12px;
+      transition: transform 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      z-index: 1;
+      box-shadow: 0 6px 20px rgba(232, 168, 107, 0.45);
+      pointer-events: none;
+    }
+
+    /* Expandable Sign-Up Fields */
+    .signup-only {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      pointer-events: none;
+      transition: max-height 0.45s ease, opacity 0.35s ease, margin 0.3s ease;
+    }
+
+    .signup-only.show {
+      max-height: 460px;
+      opacity: 1;
+      margin-bottom: 14px;
+      pointer-events: auto;
+    }
+
+    /* BIG BLANK CENTER PROFILE ICON + 3D MOVING DICE */
+    .hero-avatar-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 4px 0 16px;
+      position: relative;
+    }
+
+    .hero-avatar-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .big-profile-trigger {
+      position: relative;
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      background: rgba(0, 0, 50, 0.9);
+      border: 2.5px dashed var(--gold-bright);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), inset 0 0 18px rgba(232, 168, 107, 0.22);
+    }
+
+    .big-profile-trigger.has-avatar {
+      border-style: solid;
+      border-color: var(--gold-bright);
+      box-shadow: 0 0 25px rgba(255, 209, 102, 0.5);
+    }
+
+    .big-profile-trigger:hover {
+      transform: scale(1.06);
+      border-color: var(--gold-bright);
+      box-shadow: 0 14px 32px rgba(232, 168, 107, 0.55);
+    }
+
+    .blank-user-svg {
+      width: 52px;
+      height: 52px;
+      fill: rgba(255, 209, 102, 0.7);
+      transition: transform 0.3s ease, opacity 0.25s ease;
+      pointer-events: none;
+    }
+
+    .big-profile-trigger.has-avatar .blank-user-svg {
+      opacity: 0;
+      transform: scale(0.5);
+      position: absolute;
+    }
+
+    .big-avatar-display {
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+
+    .big-profile-trigger.has-avatar .big-avatar-display {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .edit-badge {
+      position: absolute;
+      bottom: 0;
+      right: 0;
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      cursor: pointer;
-      font-weight: 800;
-      transition: all 0.2s ease;
-    }
-
-    .login-modal-close:hover {
-      border-color: var(--gold-bright);
-      color: var(--gold-bright);
-      transform: scale(1.1);
-    }
-
-    .login-modal-title {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 1.45rem;
-      color: var(--gold-peach);
-    }
-
-    .login-modal-sub {
-      font-size: 0.82rem;
-      color: rgba(253, 248, 244, 0.82);
-      line-height: 1.45;
-    }
-
-    .login-tabs-row {
+      background: var(--gold-gradient);
+      border: 2px solid var(--navy-indigo);
+      color: var(--navy-indigo);
       display: flex;
-      gap: 0.5rem;
-      border-bottom: 1px solid rgba(232, 168, 107, 0.25);
-      padding-bottom: 0.6rem;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 900;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      pointer-events: none;
     }
 
-    .login-tab-btn {
-      flex: 1;
-      background: transparent;
-      border: 1px solid rgba(232, 168, 107, 0.35);
-      color: var(--white-soft);
-      padding: 0.48rem;
-      border-radius: 10px;
-      font-size: 0.78rem;
+    .hero-avatar-hint {
+      margin-top: 8px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--gold-bright);
+      letter-spacing: 0.3px;
+    }
+
+    /* TRUE 3D INTERACTIVE TUMBLING DICE IN GOLD & NAVY */
+    .dice-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .dice-scene {
+      width: 44px;
+      height: 44px;
+      perspective: 300px;
+    }
+
+    .cube-dice {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateX(-18deg) rotateY(24deg);
+      transition: transform 0.85s cubic-bezier(0.17, 0.89, 0.32, 1.28);
+    }
+
+    .cube-face {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #000099, #000045);
+      border: 1.5px solid var(--gold-bright);
+      box-shadow: inset 0 0 10px rgba(232, 168, 107, 0.35);
+      display: grid;
+      padding: 6px;
+      backface-visibility: visible;
+    }
+
+    .pip {
+      width: 7px;
+      height: 7px;
+      background: var(--gold-bright);
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(255, 209, 102, 0.8);
+      align-self: center;
+      justify-self: center;
+    }
+
+    .face-1 { transform: rotateY(0deg) translateZ(22px); grid-template-columns: 1fr; }
+    .face-2 { transform: rotateY(180deg) translateZ(22px); grid-template-columns: 1fr 1fr; }
+    .face-3 { transform: rotateY(90deg) translateZ(22px); grid-template-columns: 1fr 1fr 1fr; }
+    .face-4 { transform: rotateY(-90deg) translateZ(22px); grid-template-columns: 1fr 1fr; }
+    .face-5 { transform: rotateX(90deg) translateZ(22px); grid-template-columns: 1fr 1fr 1fr; }
+    .face-6 { transform: rotateX(-90deg) translateZ(22px); grid-template-columns: 1fr 1fr; }
+
+    .dice-label {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--gold-peach);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* POPUP MODAL: ALL 50 LOGOS IN ONE PLACE (NAVY & GOLD THEME) */
+    .avatar-vault-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(0, 0, 35, 0.86);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .avatar-vault-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .vault-dialog {
+      width: 100%;
+      max-width: 480px;
+      background: linear-gradient(155deg, #000080 0%, #000040 100%);
+      border: 1.5px solid var(--gold-peach);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(232, 168, 107, 0.3);
+      transform: translateY(20px) scale(0.95);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .avatar-vault-modal.open .vault-dialog {
+      transform: translateY(0) scale(1);
+    }
+
+    .vault-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(232, 168, 107, 0.3);
+    }
+
+    .vault-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--gold-bright);
+    }
+
+    .vault-close {
+      background: rgba(0, 0, 50, 0.8);
+      border: 1px solid var(--gold-peach);
+      color: var(--gold-bright);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
-    .login-tab-btn.active {
-      border-color: var(--gold-bright);
-      color: var(--gold-bright);
-      box-shadow: 0 0 15px rgba(232, 168, 107, 0.35);
+    .vault-close:hover {
+      background: var(--gold-bright);
+      color: var(--navy-indigo);
     }
 
-    .login-form {
+    .vault-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-chip {
+      background: rgba(0, 0, 45, 0.8);
+      border: 1px solid rgba(232, 168, 107, 0.4);
+      color: var(--gold-peach);
+      padding: 6px 11px;
+      border-radius: 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-chip.active,
+    .filter-chip:hover {
+      background: var(--gold-gradient);
+      border-color: transparent;
+      color: var(--navy-indigo);
+    }
+
+    .fifty-avatar-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      max-height: 290px;
+      overflow-y: auto;
+      padding: 4px;
+    }
+
+    .fifty-avatar-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .fifty-avatar-grid::-webkit-scrollbar-thumb {
+      background: rgba(232, 168, 107, 0.65);
+      border-radius: 6px;
+    }
+
+    .avatar-cell {
+      background: rgba(0, 0, 45, 0.65);
+      border: 1.5px solid rgba(232, 168, 107, 0.25);
+      border-radius: 14px;
+      padding: 7px 4px;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: all 0.18s ease;
     }
 
-    .login-field {
-      width: 100%;
-      background: transparent;
-      border: 1px solid rgba(232, 168, 107, 0.45);
-      border-radius: 12px;
-      padding: 0.65rem 0.85rem;
-      color: var(--white-soft);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.84rem;
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .login-field::placeholder {
-      color: rgba(253, 248, 244, 0.55);
-    }
-
-    .login-field:focus {
+    .avatar-cell:hover {
+      transform: translateY(-3px);
       border-color: var(--gold-bright);
-      box-shadow: 0 0 14px rgba(232, 168, 107, 0.35);
+      background: rgba(232, 168, 107, 0.18);
     }
 
-    .login-submit-btn {
-      background: transparent;
+    .avatar-cell.selected {
+      background: rgba(232, 168, 107, 0.3);
+      border-color: var(--gold-bright);
+      box-shadow: 0 0 14px rgba(255, 209, 102, 0.5);
+    }
+
+    .cell-sprite {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
       border: 1.5px solid var(--gold-peach);
-      color: var(--gold-peach);
-      padding: 0.72rem;
-      border-radius: 12px;
-      font-size: 0.85rem;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      pointer-events: none;
+    }
+
+    .cell-num {
+      font-size: 0.66rem;
+      color: var(--gold-bright);
+      font-weight: 700;
+      pointer-events: none;
+    }
+
+    /* Input Fields & Buttons in Navy & Golden Theme */
+    .input-group {
+      margin-bottom: 13px;
+      position: relative;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 13px 16px;
+      background: rgba(0, 0, 42, 0.85);
+      border: 1px solid rgba(232, 168, 107, 0.45);
+      border-radius: 14px;
+      color: var(--gold-bright);
+      font-size: 0.92rem;
+      font-weight: 600;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    .input-group input::placeholder {
+      color: rgba(232, 168, 107, 0.6);
+    }
+
+    .input-group input:focus {
+      border-color: var(--gold-bright);
+      background: rgba(0, 0, 58, 0.95);
+      box-shadow: 0 0 0 4px rgba(232, 168, 107, 0.25);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 13.5px;
+      border: none;
+      border-radius: 14px;
+      font-size: 0.95rem;
       font-weight: 800;
       cursor: pointer;
-      letter-spacing: 0.8px;
       transition: all 0.25s ease;
-      margin-top: 0.2rem;
-    }
-
-    .login-submit-btn:hover {
-      border-color: var(--gold-bright);
-      color: var(--gold-bright);
-      transform: translateY(-2px);
-      box-shadow: 0 0 22px rgba(232, 168, 107, 0.5);
-    }
-
-    .logged-in-profile-box {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.75rem;
-      text-align: center;
-      padding: 0.6rem 0;
-    }
-
-    .profile-avatar-circle {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      border: 2px solid var(--gold-peach);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 1.4rem;
-      color: var(--gold-bright);
-      box-shadow: 0 0 18px rgba(232, 168, 107, 0.45);
+      gap: 10px;
     }
 
-    /* Toast Notification for Number Copy */
+    .btn-primary {
+      background: var(--gold-gradient);
+      color: var(--navy-indigo);
+      margin-top: 6px;
+      box-shadow: 0 10px 24px rgba(232, 168, 107, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(255, 209, 102, 0.6);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 16px 0;
+      color: var(--gold-peach);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid rgba(232, 168, 107, 0.3);
+    }
+
+    .divider:not(:empty)::before { margin-right: 12px; }
+    .divider:not(:empty)::after { margin-left: 12px; }
+
+    .btn-google {
+      background: rgba(0, 0, 48, 0.9);
+      color: var(--gold-bright);
+      border: 1.5px solid var(--gold-peach);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn-google:hover {
+      background: rgba(232, 168, 107, 0.18);
+      border-color: var(--gold-bright);
+      transform: translateY(-2px);
+    }
+
+    .google-icon {
+      width: 18px;
+      height: 18px;
+      pointer-events: none;
+    }
+
+    .hidden-view { display: none !important; }
+    .active-view { display: block !important; animation: fadeScaleIn 0.35s ease forwards; }
+
+    @keyframes fadeScaleIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #profile-section { text-align: center; }
+
+    #user-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: var(--gold-bright);
+      margin-bottom: 4px;
+    }
+
+    #user-email {
+      font-size: 0.84rem;
+      color: var(--gold-peach);
+      margin-bottom: 16px;
+    }
+
+    .btn-logout {
+      background: rgba(0, 0, 40, 0.75);
+      color: var(--gold-peach);
+      border: 1px solid rgba(232, 168, 107, 0.45);
+      margin-top: 10px;
+    }
+
+    .btn-logout:hover {
+      background: rgba(255, 82, 82, 0.25);
+      color: #ffd166;
+      border-color: #ff6b6b;
+    }
+
+    /* Toast Notification */
     .contact-toast {
       position: fixed;
       bottom: 84px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: rgba(0, 0, 60, 0.85);
+      background: rgba(0, 0, 60, 0.92);
       border: 1.5px solid var(--gold-peach);
       color: var(--gold-bright);
       backdrop-filter: blur(12px);
-      padding: 0.6rem 1.5rem;
+      padding: 0.65rem 1.5rem;
       border-radius: 30px;
       font-weight: 800;
       font-size: 0.82rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75);
       z-index: 9999;
       opacity: 0;
       transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.35s ease;
@@ -2125,7 +2633,7 @@
   </div>
 
   <!-- =========================================================================
-       PAGE 3: 3RD LAST PAGE — ALL INDIAN TOURISM CONTACTS & HELPLINES DIRECTORY
+       PAGE 3: ALL INDIAN TOURISM CONTACTS & HELPLINES DIRECTORY
        ========================================================================= -->
   <section class="page-3-contact-section" id="page3Contacts">
     <div class="contact-header">
@@ -2175,7 +2683,6 @@
 
     <!-- 2. Four Category Cards Grid -->
     <div class="contact-cards-container">
-      <!-- Card 1: Emergency & National Safety -->
       <div class="contact-card">
         <div class="card-top-icon-row">
           <div class="card-icon-badge">🚨</div>
@@ -2201,7 +2708,6 @@
         </div>
       </div>
 
-      <!-- Card 2: Transit, Rail & Road -->
       <div class="contact-card">
         <div class="card-top-icon-row">
           <div class="card-icon-badge">🚆</div>
@@ -2227,7 +2733,6 @@
         </div>
       </div>
 
-      <!-- Card 3: Medical & Disaster Relief -->
       <div class="contact-card">
         <div class="card-top-icon-row">
           <div class="card-icon-badge">🏥</div>
@@ -2253,7 +2758,6 @@
         </div>
       </div>
 
-      <!-- Card 4: Official Portals & E-Visa -->
       <div class="contact-card">
         <div class="card-top-icon-row">
           <div class="card-icon-badge">🌐</div>
@@ -2433,45 +2937,166 @@
       </div>
     </div>
 
-    <!-- 6. Traveller Login / Profile -->
+    <!-- 6. Traveller Login / Profile (Opens 2nd Code Login Modal with 3D Dice & 50 Avatars) -->
     <div class="taskbar-item-wrap">
       <button type="button" class="taskbar-btn" id="dockLoginBtn" onclick="openLoginModal()">
-        <span class="taskbar-icon">👤</span>
+        <span id="nav-avatar-box" class="dock-avatar-circle">
+          <svg id="nav-blank-icon" class="dock-avatar-blank-svg" viewBox="0 0 24 24">
+            <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/>
+          </svg>
+        </span>
         <span id="dockLoginLabel">Login</span>
       </button>
     </div>
   </nav>
 
-  <!-- ================= TRAVELLER LOGIN / SIGN-UP MODAL ================= -->
-  <div class="login-modal-backdrop" id="loginModalBackdrop" onclick="handleBackdropClose(event)">
-    <div class="login-modal-card">
-      <button type="button" class="login-modal-close" onclick="closeLoginModal()">✕</button>
+  <!-- =====================================================================
+       2. FLOATING LOGIN PAGE MODAL (NAVY BLUE & GOLDEN THEME)
+       ===================================================================== -->
+  <div id="login-modal-backdrop" class="login-modal-backdrop">
+    <div class="floating-stage">
+      <div class="card-container">
+        <!-- Close Button to return to Main Page -->
+        <button type="button" id="close-login-modal-btn" class="close-login-modal" title="Back to Main Page">✕</button>
 
-      <!-- Form View -->
-      <div id="loginFormView">
-        <h3 class="login-modal-title" id="loginModalTitle">Traveller Portal</h3>
-        <p class="login-modal-sub">Sign in to bookmark your favourite Indian destinations and auto-verify your public reviews.</p>
+        <!-- AUTH SECTION -->
+        <div id="auth-section" class="view-section active-view">
+          <h1 class="brand-title">THE INDIA</h1>
+          <p class="brand-subtitle">Sign in to rate destinations & post public reviews</p>
 
-        <div class="login-tabs-row" style="margin-top:0.8rem;">
-          <button type="button" class="login-tab-btn active" id="tabSignInBtn" onclick="switchLoginTab('signin')">Sign In</button>
-          <button type="button" class="login-tab-btn" id="tabSignUpBtn" onclick="switchLoginTab('signup')">Create Account</button>
+          <!-- Animated Tabs -->
+          <div class="tabs">
+            <div id="tab-indicator" class="tab-indicator"></div>
+            <button id="tab-signin" class="tab-btn active" type="button">Sign In</button>
+            <button id="tab-signup" class="tab-btn" type="button">Sign Up</button>
+          </div>
+
+          <form id="auth-form">
+            <!-- Sign-Up Expandable Area with BIG BLANK CENTER PROFILE + 3D DICE -->
+            <div id="signup-fields" class="signup-only">
+              <div class="hero-avatar-stage">
+                <div class="hero-avatar-row">
+                  <!-- Big Blank Center Profile Icon (Click to open all 50 logos) -->
+                  <div id="signup-big-avatar-btn" class="big-profile-trigger" title="Click to view all 50 avatars">
+                    <svg class="blank-user-svg" viewBox="0 0 24 24">
+                      <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/>
+                    </svg>
+                    <div id="signup-big-avatar-img" class="big-avatar-display"></div>
+                    <div class="edit-badge">+</div>
+                  </div>
+
+                  <!-- 3D Moving Cube Dice -->
+                  <div id="signup-dice-btn" class="dice-wrapper" title="Click to roll 3D dice!">
+                    <div class="dice-scene">
+                      <div id="signup-cube" class="cube-dice">
+                        <div class="cube-face face-1"><span class="pip"></span></div>
+                        <div class="cube-face face-2"><span class="pip"></span><span class="pip"></span></div>
+                        <div class="cube-face face-3"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                        <div class="cube-face face-4"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                        <div class="cube-face face-5"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                        <div class="cube-face face-6"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                      </div>
+                    </div>
+                    <span class="dice-label">Roll 3D</span>
+                  </div>
+                </div>
+                <span id="signup-avatar-status" class="hero-avatar-hint">Click center icon for 50 logos or roll 3D dice</span>
+              </div>
+
+              <div class="input-group">
+                <input type="text" id="name" placeholder="Full Name">
+              </div>
+
+              <div class="input-group" style="margin-bottom: 0;">
+                <input type="url" id="photo" placeholder="Or paste Custom Image URL (optional)">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <input type="email" id="email" placeholder="Email Address" required>
+            </div>
+            <div class="input-group">
+              <input type="password" id="password" placeholder="Password (min 6 chars)" required>
+            </div>
+
+            <button type="submit" id="submit-btn" class="btn btn-primary">
+              Sign In
+            </button>
+          </form>
+
+          <div class="divider">or continue with</div>
+
+          <button id="google-btn" class="btn btn-google" type="button">
+            <svg class="google-icon" viewBox="0 0 24 24">
+              <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.2 8.9 5 12 5z"/>
+              <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6l3.7 2.9c2.2-2 3.7-5 3.7-8.7z"/>
+              <path fill="#FBBC05" d="M5.3 14.8c-.2-.8-.4-1.6-.4-2.5s.2-1.7.4-2.5L1.6 7C.6 9 0 11.2 0 13.5s.6 4.5 1.6 6.5l3.7-2.9z"/>
+              <path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5l-3.7 2.8C3.5 20.9 7.4 24 12 24z"/>
+            </svg>
+            Google Account
+          </button>
         </div>
 
-        <form class="login-form" style="margin-top:0.9rem;" onsubmit="handleTravellerAuth(event)">
-          <input type="text" id="authNameInput" class="login-field" placeholder="Full Name (e.g. Tushar Pal)" maxlength="45" required />
-          <input type="email" id="authEmailInput" class="login-field" placeholder="Email Address" required />
-          <input type="password" id="authPassInput" class="login-field" placeholder="Password" required />
-          <button type="submit" class="login-submit-btn" id="authSubmitBtn">✦ Continue to The India</button>
-        </form>
-      </div>
+        <!-- PROFILE SECTION -->
+        <div id="profile-section" class="view-section hidden-view">
+          <div class="hero-avatar-stage">
+            <div class="hero-avatar-row">
+              <!-- Big Center Profile Icon (Click to open all 50 logos) -->
+              <div id="profile-big-avatar-btn" class="big-profile-trigger has-avatar" title="Click to switch from 50 avatars">
+                <svg class="blank-user-svg" viewBox="0 0 24 24">
+                  <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/>
+                </svg>
+                <div id="profile-big-avatar-img" class="big-avatar-display"></div>
+                <div class="edit-badge">✎</div>
+              </div>
 
-      <!-- Logged-In Profile View -->
-      <div class="logged-in-profile-box" id="loggedInProfileView">
-        <div class="profile-avatar-circle" id="profileAvatarLetter">T</div>
-        <h3 class="login-modal-title" id="profileWelcomeName">Welcome, Traveller</h3>
-        <p class="login-modal-sub" id="profileEmailDisplay">traveller@india.in</p>
-        <button type="button" class="login-submit-btn" style="width:100%;" onclick="logoutTraveller()">Sign Out</button>
+              <!-- 3D Moving Cube Dice for Logged-in Profile -->
+              <div id="profile-dice-btn" class="dice-wrapper" title="Roll 3D Dice for a new avatar!">
+                <div class="dice-scene">
+                  <div id="profile-cube" class="cube-dice">
+                    <div class="cube-face face-1"><span class="pip"></span></div>
+                    <div class="cube-face face-2"><span class="pip"></span><span class="pip"></span></div>
+                    <div class="cube-face face-3"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                    <div class="cube-face face-4"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                    <div class="cube-face face-5"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                    <div class="cube-face face-6"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                  </div>
+                </div>
+                <span class="dice-label">Roll 3D</span>
+              </div>
+            </div>
+            <span class="hero-avatar-hint">Tap your profile circle to view all 50 avatars</span>
+          </div>
+
+          <h2 id="user-name">Traveller</h2>
+          <p id="user-email"></p>
+
+          <button type="button" id="continue-main-btn" class="btn btn-primary">Explore The India →</button>
+          <button id="signout-btn" class="btn btn-logout" type="button">Sign Out</button>
+        </div>
+
       </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       3. POPUP MODAL: ALL 50 AVATAR LOGOS IN ONE PLACE
+       ===================================================================== -->
+  <div id="avatar-vault-modal" class="avatar-vault-modal">
+    <div class="vault-dialog">
+      <div class="vault-header">
+        <span class="vault-title">Choose Your Explorer Avatar (50)</span>
+        <button type="button" id="close-vault-btn" class="vault-close" title="Close">✕</button>
+      </div>
+      <div class="vault-controls">
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="filter-chip active" data-filter="all">All 50</button>
+          <button type="button" class="filter-chip" data-filter="sheet1">1–25</button>
+          <button type="button" class="filter-chip" data-filter="sheet2">26–50</button>
+        </div>
+        <button type="button" class="filter-chip" id="modal-roll-btn">🎲 Roll Random</button>
+      </div>
+      <div id="vault-avatar-grid" class="fifty-avatar-grid"></div>
     </div>
   </div>
 
@@ -2594,7 +3219,6 @@
 
       requestAnimationFrame(animateOpticalMorph);
       populateQuickJumpStates();
-      restoreTravellerSession();
     });
 
     // ================= 1. ULTRA-SMOOTH LERP SCROLL FADE ("EXPLORE THE INDIA" + MAP) =================
@@ -3251,7 +3875,7 @@
     map.on('click', () => { if (activeStateName) leaveStateAndReset(); });
     map.on('zoomend', () => { if (activeStateName && map.getZoom() <= DEFAULT_MAP_ZOOM) stopAndCloseVideo(); });
 
-    // ================= 11. CLICK-TO-COPY TOAST HELPER =================
+    // ================= CLICK-TO-COPY TOAST HELPER =================
     function copyContactText(text, label) {
       if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(text).then(() => showToast(`Copied ${label} to clipboard!`));
@@ -3277,11 +3901,11 @@
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => {
         toast.classList.remove('show');
-      }, 2400);
+      }, 2800);
     }
 
     // =========================================================================================
-    // 12. BOTTOM TASKBAR DOCK: POPOPVERS, QUICK STATE FINDER, LANGUAGE SWITCHER & LOGIN
+    // BOTTOM TASKBAR DOCK: POPOVERS, QUICK STATE FINDER & LANGUAGE SWITCHER
     // =========================================================================================
     function scrollToSection(sectionId) {
       closeAllTaskbarPopovers();
@@ -3346,7 +3970,6 @@
       }
     });
 
-    // Quick Jump State Search List
     function populateQuickJumpStates(filterText = '') {
       const listEl = document.getElementById('stateQuickJumpList');
       if (!listEl) return;
@@ -3398,96 +4021,16 @@
 
     // Multi-Language Portal Switcher
     const PORTAL_TRANSLATIONS = {
-      EN: {
-        explore: "Explore The India",
-        home: "Home",
-        map: "Explore Map",
-        search: "Find State",
-        sos: "Helpline 1363",
-        knowMore: "Know More",
-        contactTitle: "Essential <span>Tourism & Travel</span> Contacts"
-      },
-      HI: {
-        explore: "अतुल्य भारत का अन्वेषण करें",
-        home: "होम",
-        map: "मानचित्र देखें",
-        search: "राज्य खोजें",
-        sos: "हेल्पलाइन 1363",
-        knowMore: "अधिक जानें",
-        contactTitle: "आवश्यक <span>पर्यटन एवं यात्रा</span> संपर्क"
-      },
-      BN: {
-        explore: "ভারত ভ্রমণ ও অন্বেষণ",
-        home: "হোম",
-        map: "মানচিত্র",
-        search: "রাজ্য খুঁজুন",
-        sos: "হেল্পলাইন ১৩৬৩",
-        knowMore: "আরও জানুন",
-        contactTitle: "জরুরি <span>পর্যটন ও ভ্রমণ</span> যোগাযোগ"
-      },
-      TA: {
-        explore: "இந்தியாவை ஆராயுங்கள்",
-        home: "முகப்பு",
-        map: "வரைபடம்",
-        search: "மாநிலம் தேடு",
-        sos: "உதவி எண் 1363",
-        knowMore: "மேலும் அறிய",
-        contactTitle: "முக்கிய <span>சுற்றுலா உதவி</span> எண்கள்"
-      },
-      TE: {
-        explore: "భారతదేశాన్ని అన్వేషించండి",
-        home: "హోమ్",
-        map: "మ్యాప్",
-        search: "రాష్ట్రాన్ని వెతకండి",
-        sos: "హెల్ప్‌లైన్ 1363",
-        knowMore: "మరింత తెలుసుకోండి",
-        contactTitle: "ముఖ్యమైన <span>పర్యాటక సహాయ</span> నంబర్లు"
-      },
-      MR: {
-        explore: "अतुल्य भारताचा शोध घ्या",
-        home: "मुख्यपृष्ठ",
-        map: "नकाशा पहा",
-        search: "राज्य शोधा",
-        sos: "हेल्पलाइन 1363",
-        knowMore: "अधिक जाणून घ्या",
-        contactTitle: "महत्त्वाचे <span>पर्यटन आणि प्रवास</span> संपर्क"
-      },
-      FR: {
-        explore: "Explorez L'Inde",
-        home: "Accueil",
-        map: "Carte",
-        search: "Chercher État",
-        sos: "Assistance 1363",
-        knowMore: "En Savoir Plus",
-        contactTitle: "Contacts <span>Tourisme & Urgences</span>"
-      },
-      ES: {
-        explore: "Explora La India",
-        home: "Inicio",
-        map: "Mapa",
-        search: "Buscar Estado",
-        sos: "Ayuda 1363",
-        knowMore: "Saber Más",
-        contactTitle: "Contactos de <span>Turismo y Viajes</span>"
-      },
-      DE: {
-        explore: "Entdecke Indien",
-        home: "Start",
-        map: "Karte",
-        search: "Staat Suchen",
-        sos: "Notruf 1363",
-        knowMore: "Mehr Erfahren",
-        contactTitle: "Wichtige <span>Tourismus-Kontakte</span>"
-      },
-      JA: {
-        explore: "インドを探索する",
-        home: "ホーム",
-        map: "マップ",
-        search: "州を検索",
-        sos: "ヘルプ 1363",
-        knowMore: "詳細を見る",
-        contactTitle: "インド観光 <span>緊急連絡先一覧</span>"
-      }
+      EN: { explore: "Explore The India", home: "Home", map: "Explore Map", search: "Find State", sos: "Helpline 1363", knowMore: "Know More", contactTitle: "Essential <span>Tourism & Travel</span> Contacts" },
+      HI: { explore: "अतुल्य भारत का अन्वेषण करें", home: "होम", map: "मानचित्र देखें", search: "राज्य खोजें", sos: "हेल्पलाइन 1363", knowMore: "अधिक जानें", contactTitle: "आवश्यक <span>पर्यटन एवं यात्रा</span> संपर्क" },
+      BN: { explore: "ভারত ভ্রমণ ও অন্বেষণ", home: "হোম", map: "মানচিত্র", search: "রাজ্য খুঁজুন", sos: "হেল্পলাইন ১৩৬৩", knowMore: "আরও জানুন", contactTitle: "জরুরি <span>পর্যটন ও ভ্রমণ</span> যোগাযোগ" },
+      TA: { explore: "இந்தியாவை ஆராயுங்கள்", home: "முகப்பு", map: "வரைபடம்", search: "மாநிலம் தேடு", sos: "உதவி எண் 1363", knowMore: "மேலும் அறிய", contactTitle: "முக்கிய <span>சுற்றுலா உதவி</span> எண்கள்" },
+      TE: { explore: "భారతదేశాన్ని అన్వేషించండి", home: "హోమ్", map: "మ్యాప్", search: "రాష్ట్రాన్ని వెతకండి", sos: "హెల్ప్‌లైన్ 1363", knowMore: "మరింత తెలుసుకోండి", contactTitle: "ముఖ్యమైన <span>పర్యాటక సహాయ</span> నంబర్లు" },
+      MR: { explore: "अतुल्य भारताचा शोध घ्या", home: "मुख्यपृष्ठ", map: "नकाशा पहा", search: "राज्य शोधा", sos: "हेल्पलाइन 1363", knowMore: "अधिक जाणून घ्या", contactTitle: "महत्त्वाचे <span>पर्यटन आणि प्रवास</span> संपर्क" },
+      FR: { explore: "Explorez L'Inde", home: "Accueil", map: "Carte", search: "Chercher État", sos: "Assistance 1363", knowMore: "En Savoir Plus", contactTitle: "Contacts <span>Tourisme & Urgences</span>" },
+      ES: { explore: "Explora La India", home: "Inicio", map: "Mapa", search: "Buscar Estado", sos: "Ayuda 1363", knowMore: "Saber Más", contactTitle: "Contactos de <span>Turismo y Viajes</span>" },
+      DE: { explore: "Entdecke Indien", home: "Start", map: "Karte", search: "Staat Suchen", sos: "Notruf 1363", knowMore: "Mehr Erfahren", contactTitle: "Wichtige <span>Tourismus-Kontakte</span>" },
+      JA: { explore: "インドを探索する", home: "ホーム", map: "マップ", search: "州を検索", sos: "ヘルプ 1363", knowMore: "詳細を見る", contactTitle: "インド観光 <span>緊急連絡先一覧</span>" }
     };
 
     function setSiteLanguage(code, nativeName) {
@@ -3509,87 +4052,513 @@
       showToast(`🌐 Language switched to ${nativeName} (${code})`);
     }
 
-    // Traveller Login / Auth Modal Logic
-    const STORAGE_KEY_USER = "the_india_traveller_user_v1";
+    // =========================================================================================
+    // 2ND CODE LOGIN ENGINE: 50 AVATARS, 3D DICE, FIREBASE & LOCALSTORAGE SYNC
+    // =========================================================================================
+    const SHEET_1 = "Screenshot 2026-10-04 182633.png";
+    const SHEET_2 = "Screenshot 2026-10-04 182646.png";
+    const STORAGE_KEY_USER = "the_india_traveller_user_v3";
 
+    let sheet1Available = false;
+    let sheet2Available = false;
+
+    function createFallbackAvatarSvg(index) {
+      const palettes = [
+        ["#000080", "#000040"], ["#001f54", "#034078"], ["#1a1a40", "#270082"],
+        ["#0f3460", "#16213e"], ["#000066", "#191970"], ["#0a1128", "#001f54"],
+        ["#03045e", "#023e8a"], ["#1b263b", "#0d1b2a"], ["#240046", "#3c096c"],
+        ["#000814", "#001d3d"]
+      ];
+      const skins = ["#ffdbb4", "#edb98a", "#d08b5b", "#ae5d29", "#f8d25c"];
+      const hairs = ["#1b1b2f", "#4a2c11", "#8d230f", "#d97724", "#222831", "#5c3c92"];
+
+      const [c1, c2] = palettes[index % palettes.length];
+      const skin = skins[index % skins.length];
+      const hair = hairs[(index * 3) % hairs.length];
+      const smileCurve = (index % 2 === 0) ? "M38 62 Q50 72 62 62" : "M40 63 Q50 69 60 63";
+      const hasGlasses = (index % 4 === 0);
+
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="g${index}" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="${c1}"/>
+            <stop offset="100%" stop-color="${c2}"/>
+          </linearGradient>
+        </defs>
+        <rect width="100" height="100" rx="50" fill="url(#g${index})" stroke="#FFD166" stroke-width="3"/>
+        <circle cx="50" cy="94" r="32" fill="#E8A86B" opacity="0.88"/>
+        <circle cx="50" cy="48" r="23" fill="${skin}"/>
+        <path d="M27 45 C27 22, 73 22, 73 45 C65 34, 35 34, 27 45 Z" fill="${hair}"/>
+        <circle cx="41" cy="48" r="3.2" fill="#1a1a2e"/>
+        <circle cx="59" cy="48" r="3.2" fill="#1a1a2e"/>
+        ${hasGlasses ? `<rect x="33" y="42" width="15" height="11" rx="3" fill="none" stroke="#ffd166" stroke-width="2.4"/><rect x="52" y="42" width="15" height="11" rx="3" fill="none" stroke="#ffd166" stroke-width="2.4"/><line x1="48" y1="47" x2="52" y2="47" stroke="#ffd166" stroke-width="2.4"/>` : ""}
+        <path d="${smileCurve}" stroke="#1a1a2e" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <text x="50" y="92" font-family="sans-serif" font-size="12" font-weight="800" fill="#000050" text-anchor="middle">#${index}</text>
+      </svg>`;
+      return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+    }
+
+    const FIFTY_AVATARS = [];
+    for (let i = 1; i <= 50; i++) {
+      const isSheet1 = i <= 25;
+      const idx = isSheet1 ? (i - 1) : (i - 26);
+      const row = Math.floor(idx / 5);
+      const col = idx % 5;
+      FIFTY_AVATARS.push({
+        id: `avatar-${i}`,
+        number: i,
+        name: `Avatar #${i}`,
+        sheetGroup: isSheet1 ? "sheet1" : "sheet2",
+        sheetFile: isSheet1 ? SHEET_1 : SHEET_2,
+        bgPos: `${col * 25}% ${row * 25}%`,
+        bgSize: "500% 500%",
+        svgDataUri: createFallbackAvatarSvg(i)
+      });
+    }
+
+    function probeSpriteSheets() {
+      const img1 = new Image();
+      img1.onload = () => { sheet1Available = true; refreshAllDisplays(); };
+      img1.src = SHEET_1;
+
+      const img2 = new Image();
+      img2.onload = () => { sheet2Available = true; refreshAllDisplays(); };
+      img2.src = SHEET_2;
+    }
+
+    let selectedSignUpAvatar = null;
+    let activeVaultContext = "signup";
+    let activeVaultFilter = "all";
+    let isSignUpMode = false;
+    let firebaseApi = null;
+
+    const diceAngles = {
+      signup: { x: -18, y: 24, z: 0 },
+      profile: { x: -18, y: 24, z: 0 }
+    };
+
+    const loginModalBackdrop = document.getElementById("login-modal-backdrop");
     function openLoginModal() {
       closeAllTaskbarPopovers();
-      document.getElementById('loginModalBackdrop').classList.add('open');
+      loginModalBackdrop.classList.add("open");
     }
-
     function closeLoginModal() {
-      document.getElementById('loginModalBackdrop').classList.remove('open');
+      loginModalBackdrop.classList.remove("open");
     }
 
-    function handleBackdropClose(e) {
-      if (e.target.id === 'loginModalBackdrop') {
-        closeLoginModal();
+    document.getElementById("close-login-modal-btn").addEventListener("click", closeLoginModal);
+    document.getElementById("continue-main-btn").addEventListener("click", closeLoginModal);
+    loginModalBackdrop.addEventListener("click", (e) => {
+      if (e.target === loginModalBackdrop) closeLoginModal();
+    });
+
+    function applySpriteToElement(el, photoValue) {
+      if (!el) return;
+      if (!photoValue) {
+        el.style.backgroundImage = "none";
+        return;
+      }
+      const match = FIFTY_AVATARS.find(a => a.id === photoValue);
+      if (match) {
+        const canUseSheet = (match.sheetGroup === "sheet1" && sheet1Available) ||
+                            (match.sheetGroup === "sheet2" && sheet2Available);
+        if (canUseSheet) {
+          el.style.backgroundImage = `url("${match.sheetFile}")`;
+          el.style.backgroundPosition = match.bgPos;
+          el.style.backgroundSize = match.bgSize;
+        } else {
+          el.style.backgroundImage = `url("${match.svgDataUri}")`;
+          el.style.backgroundPosition = "center center";
+          el.style.backgroundSize = "cover";
+        }
+      } else {
+        el.style.backgroundImage = `url("${photoValue}")`;
+        el.style.backgroundPosition = "center center";
+        el.style.backgroundSize = "cover";
       }
     }
 
-    function switchLoginTab(mode) {
-      const isSignUp = mode === 'signup';
-      document.getElementById('tabSignInBtn').classList.toggle('active', !isSignUp);
-      document.getElementById('tabSignUpBtn').classList.toggle('active', isSignUp);
-      document.getElementById('loginModalTitle').textContent = isSignUp ? 'Create Traveller Account' : 'Traveller Portal';
-      document.getElementById('authSubmitBtn').textContent = isSignUp ? '✦ Register & Explore' : '✦ Continue to The India';
+    function updateSignUpBigCircle(avatarId) {
+      selectedSignUpAvatar = avatarId;
+      const trigger = document.getElementById("signup-big-avatar-btn");
+      const imgBox = document.getElementById("signup-big-avatar-img");
+      const statusText = document.getElementById("signup-avatar-status");
+
+      if (!avatarId) {
+        trigger.classList.remove("has-avatar");
+        imgBox.style.backgroundImage = "none";
+        statusText.textContent = "Click center icon for 50 logos or roll 3D dice";
+      } else {
+        trigger.classList.add("has-avatar");
+        applySpriteToElement(imgBox, avatarId);
+        const match = FIFTY_AVATARS.find(a => a.id === avatarId);
+        statusText.textContent = match ? `${match.name} Selected (Tap to change)` : "Custom Avatar Selected";
+      }
     }
 
-    function handleTravellerAuth(e) {
-      e.preventDefault();
-      const name = document.getElementById('authNameInput').value.trim();
-      const email = document.getElementById('authEmailInput').value.trim();
-      if (!name || !email) return;
+    function spin3DDice(context) {
+      const cubeId = context === "signup" ? "signup-cube" : "profile-cube";
+      const cube = document.getElementById(cubeId);
+      if (!cube) return;
 
-      const userObj = { name, email };
-      try {
-        localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(userObj));
-      } catch (err) {}
+      diceAngles[context].x += 360 + (Math.floor(Math.random() * 4) * 90);
+      diceAngles[context].y += 360 + (Math.floor(Math.random() * 4) * 90);
+      diceAngles[context].z += (Math.floor(Math.random() * 2) * 90);
 
-      applyUserSessionUI(userObj);
-      closeLoginModal();
-      showToast(`✦ Welcome to The India, ${name}!`);
+      cube.style.transform = `rotateX(${diceAngles[context].x}deg) rotateY(${diceAngles[context].y}deg) rotateZ(${diceAngles[context].z}deg)`;
     }
 
-    function restoreTravellerSession() {
+    const vaultModal = document.getElementById("avatar-vault-modal");
+    function openAvatarVault(context) {
+      activeVaultContext = context;
+      renderVaultGrid();
+      vaultModal.classList.add("open");
+    }
+
+    function closeAvatarVault() {
+      vaultModal.classList.remove("open");
+    }
+
+    function renderVaultGrid() {
+      const container = document.getElementById("vault-avatar-grid");
+      container.innerHTML = "";
+
+      const saved = getSavedLocalUser();
+      const currentActive = activeVaultContext === "signup"
+        ? selectedSignUpAvatar
+        : ((firebaseApi && firebaseApi.auth.currentUser && firebaseApi.auth.currentUser.photoURL) || (saved && saved.avatar) || "avatar-1");
+
+      FIFTY_AVATARS.forEach(av => {
+        if (activeVaultFilter === "sheet1" && av.sheetGroup !== "sheet1") return;
+        if (activeVaultFilter === "sheet2" && av.sheetGroup !== "sheet2") return;
+
+        const cell = document.createElement("div");
+        cell.className = "avatar-cell" + (currentActive === av.id ? " selected" : "");
+
+        const sprite = document.createElement("div");
+        sprite.className = "cell-sprite";
+        applySpriteToElement(sprite, av.id);
+
+        const num = document.createElement("span");
+        num.className = "cell-num";
+        num.textContent = `#${av.number}`;
+
+        cell.appendChild(sprite);
+        cell.appendChild(num);
+
+        cell.addEventListener("click", async () => {
+          if (activeVaultContext === "signup") {
+            document.getElementById("photo").value = "";
+            updateSignUpBigCircle(av.id);
+            showToast(`Selected ${av.name}!`);
+          } else {
+            await updateLoggedInUserAvatar(av.id);
+          }
+          closeAvatarVault();
+        });
+
+        container.appendChild(cell);
+      });
+    }
+
+    function refreshAllDisplays() {
+      if (selectedSignUpAvatar) {
+        updateSignUpBigCircle(selectedSignUpAvatar);
+      }
+      const saved = getSavedLocalUser();
+      if (saved && saved.avatar) {
+        applySpriteToElement(document.getElementById("profile-big-avatar-img"), saved.avatar);
+        applySpriteToElement(document.getElementById("nav-avatar-box"), saved.avatar);
+      }
+      if (vaultModal.classList.contains("open")) {
+        renderVaultGrid();
+      }
+    }
+
+    document.getElementById("signup-big-avatar-btn").addEventListener("click", () => {
+      openAvatarVault("signup");
+    });
+
+    document.getElementById("profile-big-avatar-btn").addEventListener("click", () => {
+      openAvatarVault("profile");
+    });
+
+    document.getElementById("close-vault-btn").addEventListener("click", closeAvatarVault);
+    vaultModal.addEventListener("click", (e) => {
+      if (e.target === vaultModal) closeAvatarVault();
+    });
+
+    document.getElementById("signup-dice-btn").addEventListener("click", () => {
+      spin3DDice("signup");
+      const randId = `avatar-${Math.floor(Math.random() * 50) + 1}`;
+      document.getElementById("photo").value = "";
+      updateSignUpBigCircle(randId);
+    });
+
+    document.getElementById("profile-dice-btn").addEventListener("click", async () => {
+      spin3DDice("profile");
+      const randId = `avatar-${Math.floor(Math.random() * 50) + 1}`;
+      await updateLoggedInUserAvatar(randId);
+    });
+
+    document.getElementById("modal-roll-btn").addEventListener("click", async () => {
+      const randId = `avatar-${Math.floor(Math.random() * 50) + 1}`;
+      spin3DDice(activeVaultContext);
+      if (activeVaultContext === "signup") {
+        document.getElementById("photo").value = "";
+        updateSignUpBigCircle(randId);
+      } else {
+        await updateLoggedInUserAvatar(randId);
+      }
+      renderVaultGrid();
+    });
+
+    document.querySelectorAll(".filter-chip[data-filter]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-chip[data-filter]").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeVaultFilter = btn.getAttribute("data-filter");
+        renderVaultGrid();
+      });
+    });
+
+    const tabSignIn = document.getElementById("tab-signin");
+    const tabSignUp = document.getElementById("tab-signup");
+    const tabIndicator = document.getElementById("tab-indicator");
+    const signupFields = document.getElementById("signup-fields");
+    const submitBtn = document.getElementById("submit-btn");
+    const authForm = document.getElementById("auth-form");
+    const nameInput = document.getElementById("name");
+    const photoInput = document.getElementById("photo");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    function getSavedLocalUser() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY_USER);
-        if (raw) {
-          applyUserSessionUI(JSON.parse(raw));
-        }
-      } catch (err) {}
-    }
-
-    function applyUserSessionUI(user) {
-      if (!user || !user.name) return;
-      const firstName = user.name.split(' ')[0];
-      document.getElementById('dockLoginLabel').textContent = firstName;
-      document.getElementById('loginFormView').style.display = 'none';
-
-      const profBox = document.getElementById('loggedInProfileView');
-      profBox.style.display = 'flex';
-      document.getElementById('profileAvatarLetter').textContent = firstName.charAt(0).toUpperCase();
-      document.getElementById('profileWelcomeName').textContent = user.name;
-      document.getElementById('profileEmailDisplay').textContent = user.email;
-
-      const revNameInput = document.getElementById('reviewerNameInput');
-      if (revNameInput && !revNameInput.value) {
-        revNameInput.value = user.name;
+        return raw ? JSON.parse(raw) : null;
+      } catch (e) {
+        return null;
       }
     }
 
-    function logoutTraveller() {
-      try {
-        localStorage.removeItem(STORAGE_KEY_USER);
-      } catch (err) {}
+    function syncUserWithMainPortal(userObj, overrideAvatar) {
+      const navAvatarBox = document.getElementById("nav-avatar-box");
+      const navBlankIcon = document.getElementById("nav-blank-icon");
+      const dockLoginLabel = document.getElementById("dockLoginLabel");
 
-      document.getElementById('dockLoginLabel').textContent = 'Login';
-      document.getElementById('loggedInProfileView').style.display = 'none';
-      document.getElementById('loginFormView').style.display = 'block';
-      document.getElementById('authPassInput').value = '';
-      closeLoginModal();
-      showToast('Signed out of Traveller Portal');
+      if (!userObj) {
+        localStorage.removeItem(STORAGE_KEY_USER);
+        navAvatarBox.style.backgroundImage = "none";
+        navBlankIcon.style.display = "block";
+        dockLoginLabel.textContent = "Login";
+        return;
+      }
+
+      const payload = {
+        name: userObj.displayName || userObj.name || "Explorer",
+        email: userObj.email || "",
+        avatar: overrideAvatar || userObj.photoURL || userObj.avatar || "avatar-1"
+      };
+      localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(payload));
+
+      // Update Bottom Taskbar Login Button & Sidebar Review Input Live
+      navBlankIcon.style.display = "none";
+      applySpriteToElement(navAvatarBox, payload.avatar);
+      dockLoginLabel.textContent = payload.name.split(" ")[0];
+
+      const revNameInput = document.getElementById("reviewerNameInput");
+      if (revNameInput && !revNameInput.value) {
+        revNameInput.value = payload.name;
+      }
     }
+
+    async function updateLoggedInUserAvatar(avatarId) {
+      try {
+        if (firebaseApi && firebaseApi.auth.currentUser) {
+          await firebaseApi.updateProfile(firebaseApi.auth.currentUser, { photoURL: avatarId });
+          syncUserWithMainPortal(firebaseApi.auth.currentUser, avatarId);
+        } else {
+          const localUser = getSavedLocalUser() || { name: "Explorer", email: "traveller@indiantourism.in" };
+          localUser.avatar = avatarId;
+          syncUserWithMainPortal(localUser, avatarId);
+        }
+        applySpriteToElement(document.getElementById("profile-big-avatar-img"), avatarId);
+        const match = FIFTY_AVATARS.find(a => a.id === avatarId);
+        showToast(`Switched to ${match ? match.name : "new avatar"}!`);
+      } catch (err) {
+        showToast("Could not update avatar: " + err.message);
+      }
+    }
+
+    function renderProfile(user) {
+      const authSec = document.getElementById("auth-section");
+      const profSec = document.getElementById("profile-section");
+
+      if (user) {
+        authSec.classList.replace("active-view", "hidden-view");
+        profSec.classList.replace("hidden-view", "active-view");
+
+        const displayName = user.displayName || user.name || "Explorer";
+        const avatarRef = user.photoURL || user.avatar || "avatar-1";
+
+        document.getElementById("user-name").textContent = displayName;
+        document.getElementById("user-email").textContent = user.email || "";
+
+        applySpriteToElement(document.getElementById("profile-big-avatar-img"), avatarRef);
+        syncUserWithMainPortal(user, avatarRef);
+      } else {
+        profSec.classList.replace("active-view", "hidden-view");
+        authSec.classList.replace("hidden-view", "active-view");
+        authForm.reset();
+        updateSignUpBigCircle(null);
+        syncUserWithMainPortal(null);
+      }
+    }
+
+    tabSignIn.addEventListener("click", () => {
+      isSignUpMode = false;
+      tabSignIn.classList.add("active");
+      tabSignUp.classList.remove("active");
+      tabIndicator.style.transform = "translateX(0%)";
+      signupFields.classList.remove("show");
+      submitBtn.textContent = "Sign In";
+    });
+
+    tabSignUp.addEventListener("click", () => {
+      isSignUpMode = true;
+      tabSignUp.classList.add("active");
+      tabSignIn.classList.remove("active");
+      tabIndicator.style.transform = "translateX(100%)";
+      signupFields.classList.add("show");
+      submitBtn.textContent = "Create Account";
+    });
+
+    photoInput.addEventListener("input", () => {
+      const customUrl = photoInput.value.trim();
+      if (customUrl) {
+        updateSignUpBigCircle(customUrl);
+      } else {
+        updateSignUpBigCircle(null);
+      }
+    });
+
+    authForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = "Please wait...";
+      submitBtn.disabled = true;
+
+      const email = emailInput.value.trim();
+      const pass = passwordInput.value;
+      const chosenPhoto = photoInput.value.trim() || selectedSignUpAvatar || "avatar-1";
+      const chosenName = nameInput.value.trim() || email.split("@")[0] || "Explorer";
+
+      try {
+        if (firebaseApi) {
+          if (isSignUpMode) {
+            const userCredential = await firebaseApi.createUserWithEmailAndPassword(firebaseApi.auth, email, pass);
+            await firebaseApi.updateProfile(userCredential.user, {
+              displayName: chosenName,
+              photoURL: chosenPhoto
+            });
+            renderProfile({ displayName: chosenName, email: email, photoURL: chosenPhoto });
+            showToast("Account created!");
+          } else {
+            const userCredential = await firebaseApi.signInWithEmailAndPassword(firebaseApi.auth, email, pass);
+            renderProfile(userCredential.user);
+            showToast("Signed in successfully!");
+          }
+        } else {
+          const localUser = {
+            name: isSignUpMode ? chosenName : ((getSavedLocalUser() && getSavedLocalUser().name) || email.split("@")[0]),
+            email: email,
+            avatar: isSignUpMode ? chosenPhoto : ((getSavedLocalUser() && getSavedLocalUser().avatar) || "avatar-1")
+          };
+          renderProfile(localUser);
+          showToast(isSignUpMode ? "Account created!" : "Signed in!");
+        }
+      } catch (error) {
+        showToast(error.message ? error.message.replace("Firebase: ", "") : "Authentication failed");
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+    });
+
+    document.getElementById("google-btn").addEventListener("click", async () => {
+      if (!firebaseApi || window.location.protocol === "file:") {
+        renderProfile({ name: "Google Traveller", email: "traveller@gmail.com", avatar: selectedSignUpAvatar || "avatar-1" });
+        showToast("Signed in with Google!");
+        return;
+      }
+      try {
+        await firebaseApi.signInWithPopup(firebaseApi.auth, firebaseApi.googleProvider);
+        showToast("Signed in with Google!");
+      } catch (error) {
+        showToast(error.message.replace("Firebase: ", ""));
+      }
+    });
+
+    document.getElementById("signout-btn").addEventListener("click", async () => {
+      if (firebaseApi && firebaseApi.auth.currentUser) {
+        await firebaseApi.signOut(firebaseApi.auth);
+      }
+      renderProfile(null);
+      showToast("Signed out safely.");
+    });
+
+    probeSpriteSheets();
+    const existingLocalUser = getSavedLocalUser();
+    if (existingLocalUser) {
+      renderProfile(existingLocalUser);
+    }
+
+    (async () => {
+      try {
+        const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js");
+        const {
+          getAuth,
+          createUserWithEmailAndPassword,
+          signInWithEmailAndPassword,
+          signOut,
+          updateProfile,
+          onAuthStateChanged,
+          GoogleAuthProvider,
+          signInWithPopup
+        } = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js");
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBrG1vADrmcP69-W3xiqqZwvlrOQzrCDlI",
+          authDomain: "indian-turisam.firebaseapp.com",
+          projectId: "indian-turisam",
+          storageBucket: "indian-turisam.firebasestorage.app",
+          messagingSenderId: "255922378560",
+          appId: "1:255922378560:web:c9499ca98ea8549db10ca5",
+          measurementId: "G-MLQHZQ07P9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        firebaseApi = {
+          auth,
+          googleProvider,
+          createUserWithEmailAndPassword,
+          signInWithEmailAndPassword,
+          signOut,
+          updateProfile,
+          signInWithPopup
+        };
+
+        onAuthStateChanged(auth, (user) => {
+          if (user) renderProfile(user);
+        });
+      } catch (err) {
+        console.warn("Running in local mode:", err);
+      }
+    })();
   </script>
 
 </body>
