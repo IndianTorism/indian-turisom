@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indian Tourism - Welcome</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-image: url("WhatsApp Image 2026-10-04 at 10.30.38 PM.jpeg");
+      --primary: #ff8c3b;
+      --primary-glow: #ff5e62;
+      --primary-gradient: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
+      --accent-gold: #ffd166;
+      --glass-surface: rgba(14, 21, 32, 0.72);
+      --glass-highlight: rgba(255, 255, 255, 0.24);
+      --glass-border: rgba(255, 215, 175, 0.28);
+      --input-bg: rgba(8, 13, 22, 0.68);
+      --text-light: #ffffff;
+      --text-muted: rgba(255, 240, 225, 0.76);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      overflow-x: hidden;
+      padding: 24px;
+      position: relative;
+      background-color: #0b111a;
+    }
+
+    /* Full-Screen Custom Background */
+    .bg-scene {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image: var(--bg-image);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transform: scale(1.06);
+      animation: bgBreathe 22s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255, 140, 59, 0.16) 0%, rgba(12, 18, 28, 0.68) 65%, rgba(6, 10, 16, 0.88) 100%),
+        linear-gradient(180deg, rgba(10, 16, 26, 0.25) 0%, rgba(10, 16, 26, 0.75) 100%);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      pointer-events: none;
+    }
+
+    @keyframes bgBreathe {
+      0% { transform: scale(1.03); }
+      100% { transform: scale(1.11); }
+    }
+
+    /* Floating Stage */
+    .floating-stage {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+      z-index: 10;
+      animation: floatBar 5s ease-in-out infinite;
+    }
+
+    .floating-stage:hover,
+    .floating-stage:focus-within {
+      animation-play-state: paused;
+    }
+
+    .floating-stage::after {
+      content: '';
+      position: absolute;
+      bottom: -32px;
+      left: 10%;
+      right: 10%;
+      height: 26px;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 72%);
+      filter: blur(10px);
+      border-radius: 50%;
+      z-index: -1;
+      animation: shadowPulse 5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes floatBar {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    @keyframes shadowPulse {
+      0%, 100% { transform: scale(1); opacity: 0.85; }
+      50% { transform: scale(0.85); opacity: 0.45; }
+    }
+
+    /* Floating Glass Login Card */
+    .card-container {
+      position: relative;
+      z-index: 20;
+      width: 100%;
+      background: var(--glass-surface);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      border-radius: 28px;
+      padding: 30px 26px;
+      border: 1px solid var(--glass-border);
+      box-shadow:
+        0 30px 60px -12px rgba(0, 0, 0, 0.7),
+        0 0 40px rgba(255, 140, 59, 0.16),
+        inset 0 1px 1px var(--glass-highlight);
+    }
+
+    .card-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 15%;
+      right: 15%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), var(--primary), transparent);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .brand-title {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+      letter-spacing: -0.4px;
+      background: linear-gradient(135deg, #ffffff 20%, #ffe3b3 65%, #ff9966 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-subtitle {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    /* Animated Pill Toggle Tabs */
+    .tabs {
+      display: flex;
+      position: relative;
+      background: rgba(8, 12, 20, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 5px;
+      margin-bottom: 18px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      position: relative;
+      z-index: 3;
+      transition: color 0.3s ease;
+    }
+
+    .tab-btn.active {
+      color: #fff;
+    }
+
+    .tab-indicator {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: calc(50% - 5px);
+      height: calc(100% - 10px);
+      background: var(--primary-gradient);
+      border-radius: 12px;
+      transition: transform 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      z-index: 1;
+      box-shadow: 0 6px 20px rgba(255, 94, 98, 0.45);
+      pointer-events: none;
+    }
+
+    /* Expandable Sign-Up Fields */
+    .signup-only {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      pointer-events: none;
+      transition: max-height 0.45s ease, opacity 0.35s ease, margin 0.3s ease;
+    }
+
+    .signup-only.show {
+      max-height: 460px;
+      opacity: 1;
+      margin-bottom: 14px;
+      pointer-events: auto;
+    }
+
+    /* =========================================================================
+       BIG BLANK CENTER PROFILE ICON + 3D MOVING DICE
+       ========================================================================= */
+    .hero-avatar-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 4px 0 16px;
+      position: relative;
+    }
+
+    .hero-avatar-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    /* Big Center Blank / Chosen Profile Button */
+    .big-profile-trigger {
+      position: relative;
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      background: rgba(12, 19, 31, 0.85);
+      border: 2.5px dashed rgba(255, 209, 102, 0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45), inset 0 0 18px rgba(255, 140, 59, 0.15);
+    }
+
+    .big-profile-trigger.has-avatar {
+      border-style: solid;
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 25px rgba(255, 140, 59, 0.45);
+    }
+
+    .big-profile-trigger:hover {
+      transform: scale(1.06);
+      border-color: #fff;
+      box-shadow: 0 14px 32px rgba(255, 94, 98, 0.45);
+    }
+
+    /* Blank Silhouette Icon inside the big circle when no avatar is chosen yet */
+    .blank-user-svg {
+      width: 52px;
+      height: 52px;
+      fill: rgba(255, 230, 200, 0.55);
+      transition: transform 0.3s ease, opacity 0.25s ease;
+      pointer-events: none;
+    }
+
+    .big-profile-trigger.has-avatar .blank-user-svg {
+      opacity: 0;
+      transform: scale(0.5);
+      position: absolute;
+    }
+
+    .big-avatar-display {
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+
+    .big-profile-trigger.has-avatar .big-avatar-display {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Small Camera / Plus Badge on Bottom Right of Big Profile Circle */
+    .edit-badge {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary-gradient);
+      border: 2px solid #0f1722;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+    }
+
+    .hero-avatar-hint {
+      margin-top: 8px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--accent-gold);
+      letter-spacing: 0.2px;
+    }
+
+    /* =========================================================================
+       TRUE 3D INTERACTIVE TUMBLING DICE
+       ========================================================================= */
+    .dice-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .dice-scene {
+      width: 44px;
+      height: 44px;
+      perspective: 300px;
+    }
+
+    .cube-dice {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateX(-18deg) rotateY(24deg);
+      transition: transform 0.85s cubic-bezier(0.17, 0.89, 0.32, 1.28);
+    }
+
+    .cube-face {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #ff9966, #ff5e62);
+      border: 1.5px solid rgba(255, 255, 255, 0.65);
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.25);
+      display: grid;
+      padding: 6px;
+      backface-visibility: visible;
+    }
+
+    /* Pip Dots on the 3D Dice Faces */
+    .pip {
+      width: 7px;
+      height: 7px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+      align-self: center;
+      justify-self: center;
+    }
+
+    .face-1 { transform: rotateY(0deg) translateZ(22px); grid-template-columns: 1fr; }
+    .face-2 { transform: rotateY(180deg) translateZ(22px); grid-template-columns: 1fr 1fr; }
+    .face-3 { transform: rotateY(90deg) translateZ(22px); grid-template-columns: 1fr 1fr 1fr; }
+    .face-4 { transform: rotateY(-90deg) translateZ(22px); grid-template-columns: 1fr 1fr; }
+    .face-5 { transform: rotateX(90deg) translateZ(22px); grid-template-columns: 1fr 1fr 1fr; }
+    .face-6 { transform: rotateX(-90deg) translateZ(22px); grid-template-columns: 1fr 1fr; }
+
+    .dice-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .dice-wrapper:hover .dice-label {
+      color: #fff;
+    }
+
+    /* =========================================================================
+       POPUP MODAL: ALL 50 LOGOS IN ONE PLACE WHEN CENTER ICON IS CLICKED
+       ========================================================================= */
+    .avatar-vault-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(6, 10, 18, 0.78);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .avatar-vault-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .vault-dialog {
+      width: 100%;
+      max-width: 480px;
+      background: rgba(16, 24, 38, 0.96);
+      border: 1px solid rgba(255, 209, 102, 0.38);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+      transform: translateY(20px) scale(0.95);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .avatar-vault-modal.open .vault-dialog {
+      transform: translateY(0) scale(1);
+    }
+
+    .vault-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .vault-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+    }
+
+    .vault-close {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .vault-close:hover {
+      background: #ff5252;
+    }
+
+    .vault-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-chip {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--text-muted);
+      padding: 6px 11px;
+      border-radius: 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-chip.active,
+    .filter-chip:hover {
+      background: var(--primary-gradient);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .fifty-avatar-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      max-height: 290px;
+      overflow-y: auto;
+      padding: 4px;
+    }
+
+    .fifty-avatar-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .fifty-avatar-grid::-webkit-scrollbar-thumb {
+      background: rgba(255, 153, 102, 0.65);
+      border-radius: 6px;
+    }
+
+    .avatar-cell {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 7px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .avatar-cell:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-gold);
+      background: rgba(255, 153, 102, 0.16);
+    }
+
+    .avatar-cell.selected {
+      background: rgba(255, 140, 59, 0.3);
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 14px rgba(255, 140, 59, 0.5);
+    }
+
+    .cell-sprite {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      pointer-events: none;
+    }
+
+    .cell-num {
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      pointer-events: none;
+    }
+
+    /* Input Fields & Buttons */
+    .input-group {
+      margin-bottom: 13px;
+      position: relative;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 13px 16px;
+      background: var(--input-bg);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 14px;
+      color: #fff;
+      font-size: 0.92rem;
+      font-weight: 500;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    .input-group input::placeholder {
+      color: rgba(255, 235, 215, 0.5);
+    }
+
+    .input-group input:focus {
+      border-color: var(--accent-gold);
+      background: rgba(15, 23, 36, 0.9);
+      box-shadow: 0 0 0 4px rgba(255, 153, 102, 0.25);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 13.5px;
+      border: none;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: #fff;
+      margin-top: 6px;
+      box-shadow: 0 10px 24px rgba(255, 94, 98, 0.42);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(255, 94, 98, 0.6);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 16px 0;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .divider:not(:empty)::before { margin-right: 12px; }
+    .divider:not(:empty)::after { margin-left: 12px; }
+
+    .btn-google {
+      background: rgba(255, 255, 255, 0.95);
+      color: #1c222b;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .btn-google:hover {
+      background: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .google-icon {
+      width: 18px;
+      height: 18px;
+      pointer-events: none;
+    }
+
+    .hidden-view { display: none !important; }
+    .active-view { display: block !important; animation: fadeScaleIn 0.35s ease forwards; }
+
+    @keyframes fadeScaleIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #profile-section { text-align: center; }
+
+    #user-name {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    #user-email {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .btn-logout {
+      background: rgba(255, 82, 82, 0.18);
+      color: #ff8a8a;
+      border: 1px solid rgba(255, 82, 82, 0.38);
+      margin-top: 12px;
+    }
+
+    .btn-logout:hover {
+      background: #ff5252;
+      color: #fff;
+    }
+
+    .toast {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      background: rgba(14, 21, 32, 0.95);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 209, 102, 0.35);
+      border-left: 4px solid var(--accent-gold);
+      color: #fff;
+      padding: 13px 20px;
+      border-radius: 12px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+      transform: translateX(150%);
+      transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    .toast.show { transform: translateX(0); }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Image Background & Color-Matched Atmospheric Overlay -->
+  <div class="bg-scene"></div>
+  <div class="bg-overlay"></div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <!-- =====================================================================
+       POPUP MODAL: ALL 50 AVATAR LOGOS IN ONE PLACE
+       ===================================================================== -->
+  <div id="avatar-vault-modal" class="avatar-vault-modal">
+    <div class="vault-dialog">
+      <div class="vault-header">
+        <span class="vault-title">Choose Your Explorer Avatar (50)</span>
+        <button type="button" id="close-vault-btn" class="vault-close" title="Close">✕</button>
+      </div>
+      <div class="vault-controls">
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="filter-chip active" data-filter="all">All 50</button>
+          <button type="button" class="filter-chip" data-filter="sheet1">1–25</button>
+          <button type="button" class="filter-chip" data-filter="sheet2">26–50</button>
+        </div>
+        <button type="button" class="filter-chip" id="modal-roll-btn">🎲 Roll Random</button>
+      </div>
+      <div id="vault-avatar-grid" class="fifty-avatar-grid"></div>
+    </div>
+  </div>
+
+  <!-- Floating Wrapper -->
+  <div class="floating-stage">
+    <div class="card-container">
+
+      <!-- AUTH SECTION -->
+      <div id="auth-section" class="view-section active-view">
+        <h1 class="brand-title">Indian Tourism</h1>
+        <p class="brand-subtitle">Sign in to rate destinations & post public reviews</p>
+
+        <!-- Animated Tabs -->
+        <div class="tabs">
+          <div id="tab-indicator" class="tab-indicator"></div>
+          <button id="tab-signin" class="tab-btn active" type="button">Sign In</button>
+          <button id="tab-signup" class="tab-btn" type="button">Sign Up</button>
+        </div>
+
+        <form id="auth-form">
+          <!-- Sign-Up Expandable Area with BIG BLANK CENTER PROFILE + 3D DICE -->
+          <div id="signup-fields" class="signup-only">
+            <div class="hero-avatar-stage">
+              <div class="hero-avatar-row">
+                <!-- Big Blank Center Profile Icon (Click to open all 50 logos) -->
+                <div id="signup-big-avatar-btn" class="big-profile-trigger" title="Click to view all 50 avatars">
+                  <svg class="blank-user-svg" viewBox="0 0 24 24">
+                    <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/>
+                  </svg>
+                  <div id="signup-big-avatar-img" class="big-avatar-display"></div>
+                  <div class="edit-badge">+</div>
+                </div>
+
+                <!-- 3D Moving Cube Dice -->
+                <div id="signup-dice-btn" class="dice-wrapper" title="Click to roll 3D dice!">
+                  <div class="dice-scene">
+                    <div id="signup-cube" class="cube-dice">
+                      <div class="cube-face face-1"><span class="pip"></span></div>
+                      <div class="cube-face face-2"><span class="pip"></span><span class="pip"></span></div>
+                      <div class="cube-face face-3"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                      <div class="cube-face face-4"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                      <div class="cube-face face-5"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                      <div class="cube-face face-6"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                    </div>
+                  </div>
+                  <span class="dice-label">Roll 3D</span>
+                </div>
+              </div>
+              <span id="signup-avatar-status" class="hero-avatar-hint">Click center icon for 50 logos or roll 3D dice</span>
+            </div>
+
+            <div class="input-group">
+              <input type="text" id="name" placeholder="Full Name">
+            </div>
+
+            <div class="input-group" style="margin-bottom: 0;">
+              <input type="url" id="photo" placeholder="Or paste Custom Image URL (optional)">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <input type="email" id="email" placeholder="Email Address" required>
+          </div>
+          <div class="input-group">
+            <input type="password" id="password" placeholder="Password (min 6 chars)" required>
+          </div>
+
+          <button type="submit" id="submit-btn" class="btn btn-primary">
+            Sign In
+          </button>
+        </form>
+
+        <div class="divider">or continue with</div>
+
+        <button id="google-btn" class="btn btn-google" type="button">
+          <svg class="google-icon" viewBox="0 0 24 24">
+            <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.2 8.9 5 12 5z"/>
+            <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6l3.7 2.9c2.2-2 3.7-5 3.7-8.7z"/>
+            <path fill="#FBBC05" d="M5.3 14.8c-.2-.8-.4-1.6-.4-2.5s.2-1.7.4-2.5L1.6 7C.6 9 0 11.2 0 13.5s.6 4.5 1.6 6.5l3.7-2.9z"/>
+            <path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5l-3.7 2.8C3.5 20.9 7.4 24 12 24z"/>
+          </svg>
+          Google Account
+        </button>
+      </div>
+
+      <!-- PROFILE SECTION -->
+      <div id="profile-section" class="view-section hidden-view">
+        <div class="hero-avatar-stage">
+          <div class="hero-avatar-row">
+            <!-- Big Center Profile Icon (Click to open all 50 logos) -->
+            <div id="profile-big-avatar-btn" class="big-profile-trigger has-avatar" title="Click to switch from 50 avatars">
+              <svg class="blank-user-svg" viewBox="0 0 24 24">
+                <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/>
+              </svg>
+              <div id="profile-big-avatar-img" class="big-avatar-display"></div>
+              <div class="edit-badge">✎</div>
+            </div>
+
+            <!-- 3D Moving Cube Dice for Logged-in Profile -->
+            <div id="profile-dice-btn" class="dice-wrapper" title="Roll 3D Dice for a new avatar!">
+              <div class="dice-scene">
+                <div id="profile-cube" class="cube-dice">
+                  <div class="cube-face face-1"><span class="pip"></span></div>
+                  <div class="cube-face face-2"><span class="pip"></span><span class="pip"></span></div>
+                  <div class="cube-face face-3"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                  <div class="cube-face face-4"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                  <div class="cube-face face-5"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                  <div class="cube-face face-6"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+                </div>
+              </div>
+              <span class="dice-label">Roll 3D</span>
+            </div>
+          </div>
+          <span class="hero-avatar-hint">Tap your profile circle to view all 50 avatars</span>
+        </div>
+
+        <h2 id="user-name">Traveller</h2>
+        <p id="user-email"></p>
+
+        <button id="signout-btn" class="btn btn-logout" type="button">Sign Out</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const SHEET_1 = "Screenshot 2026-10-04 182633.png";
+    const SHEET_2 = "Screenshot 2026-10-04 182646.png";
+    const STORAGE_KEY_USER = "the_india_traveller_user_v3";
+
+    let sheet1Available = false;
+    let sheet2Available = false;
+
+    function createFallbackAvatarSvg(index) {
+      const palettes = [
+        ["#ff9966", "#ff5e62"], ["#00b4db", "#0083b0"], ["#a8ff78", "#78ffd6"],
+        ["#f857a6", "#ff5858"], ["#ffd166", "#f77f00"], ["#8ec5fc", "#e0c3fc"],
+        ["#4facfe", "#00f2fe"], ["#43e97b", "#38f9d7"], ["#fa709a", "#fee140"],
+        ["#c471f5", "#fa71cd"]
+      ];
+      const skins = ["#ffdbb4", "#edb98a", "#d08b5b", "#ae5d29", "#f8d25c"];
+      const hairs = ["#1b1b2f", "#4a2c11", "#8d230f", "#d97724", "#222831", "#5c3c92"];
+
+      const [c1, c2] = palettes[index % palettes.length];
+      const skin = skins[index % skins.length];
+      const hair = hairs[(index * 3) % hairs.length];
+      const smileCurve = (index % 2 === 0) ? "M38 62 Q50 72 62 62" : "M40 63 Q50 69 60 63";
+      const hasGlasses = (index % 4 === 0);
+
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="g${index}" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="${c1}"/>
+            <stop offset="100%" stop-color="${c2}"/>
+          </linearGradient>
+        </defs>
+        <rect width="100" height="100" rx="50" fill="url(#g${index})"/>
+        <circle cx="50" cy="94" r="32" fill="#141e2e" opacity="0.88"/>
+        <circle cx="50" cy="48" r="23" fill="${skin}"/>
+        <path d="M27 45 C27 22, 73 22, 73 45 C65 34, 35 34, 27 45 Z" fill="${hair}"/>
+        <circle cx="41" cy="48" r="3.2" fill="#1a1a2e"/>
+        <circle cx="59" cy="48" r="3.2" fill="#1a1a2e"/>
+        ${hasGlasses ? `<rect x="33" y="42" width="15" height="11" rx="3" fill="none" stroke="#ffd166" stroke-width="2.4"/><rect x="52" y="42" width="15" height="11" rx="3" fill="none" stroke="#ffd166" stroke-width="2.4"/><line x1="48" y1="47" x2="52" y2="47" stroke="#ffd166" stroke-width="2.4"/>` : ""}
+        <path d="${smileCurve}" stroke="#1a1a2e" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <text x="50" y="92" font-family="sans-serif" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">#${index}</text>
+      </svg>`;
+      return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+    }
+
+    const FIFTY_AVATARS = [];
+    for (let i = 1; i <= 50; i++) {
+      const isSheet1 = i <= 25;
+      const idx = isSheet1 ? (i - 1) : (i - 26);
+      const row = Math.floor(idx / 5);
+      const col = idx % 5;
+      FIFTY_AVATARS.push({
+        id: `avatar-${i}`,
+        number: i,
+        name: `Avatar #${i}`,
+        sheetGroup: isSheet1 ? "sheet1" : "sheet2",
+        sheetFile: isSheet1 ? SHEET_1 : SHEET_2,
+        bgPos: `${col * 25}% ${row * 25}%`,
+        bgSize: "500% 500%",
+        svgDataUri: createFallbackAvatarSvg(i)
+      });
+    }
+
+    function probeSpriteSheets() {
+      const img1 = new Image();
+      img1.onload = () => { sheet1Available = true; refreshAllDisplays(); };
+      img1.src = SHEET_1;
+
+      const img2 = new Image();
+      img2.onload = () => { sheet2Available = true; refreshAllDisplays(); };
+      img2.src = SHEET_2;
+    }
+
+    let selectedSignUpAvatar = null;
+    let activeVaultContext = "signup";
+    let activeVaultFilter = "all";
+    let isSignUpMode = false;
+    let firebaseApi = null;
+
+    const diceAngles = {
+      signup: { x: -18, y: 24, z: 0 },
+      profile: { x: -18, y: 24, z: 0 }
+    };
+
+    function applySpriteToElement(el, photoValue) {
+      if (!el) return;
+      if (!photoValue) {
+        el.style.backgroundImage = "none";
+        return;
+      }
+      const match = FIFTY_AVATARS.find(a => a.id === photoValue);
+      if (match) {
+        const canUseSheet = (match.sheetGroup === "sheet1" && sheet1Available) ||
+                            (match.sheetGroup === "sheet2" && sheet2Available);
+        if (canUseSheet) {
+          el.style.backgroundImage = `url("${match.sheetFile}")`;
+          el.style.backgroundPosition = match.bgPos;
+          el.style.backgroundSize = match.bgSize;
+        } else {
+          el.style.backgroundImage = `url("${match.svgDataUri}")`;
+          el.style.backgroundPosition = "center center";
+          el.style.backgroundSize = "cover";
+        }
+      } else {
+        el.style.backgroundImage = `url("${photoValue}")`;
+        el.style.backgroundPosition = "center center";
+        el.style.backgroundSize = "cover";
+      }
+    }
+
+    function updateSignUpBigCircle(avatarId) {
+      selectedSignUpAvatar = avatarId;
+      const trigger = document.getElementById("signup-big-avatar-btn");
+      const imgBox = document.getElementById("signup-big-avatar-img");
+      const statusText = document.getElementById("signup-avatar-status");
+
+      if (!avatarId) {
+        trigger.classList.remove("has-avatar");
+        imgBox.style.backgroundImage = "none";
+        statusText.textContent = "Click center icon for 50 logos or roll 3D dice";
+      } else {
+        trigger.classList.add("has-avatar");
+        applySpriteToElement(imgBox, avatarId);
+        const match = FIFTY_AVATARS.find(a => a.id === avatarId);
+        statusText.textContent = match ? `${match.name} Selected (Tap to change)` : "Custom Avatar Selected";
+      }
+    }
+
+    function spin3DDice(context) {
+      const cubeId = context === "signup" ? "signup-cube" : "profile-cube";
+      const cube = document.getElementById(cubeId);
+      if (!cube) return;
+
+      diceAngles[context].x += 360 + (Math.floor(Math.random() * 4) * 90);
+      diceAngles[context].y += 360 + (Math.floor(Math.random() * 4) * 90);
+      diceAngles[context].z += (Math.floor(Math.random() * 2) * 90);
+
+      cube.style.transform = `rotateX(${diceAngles[context].x}deg) rotateY(${diceAngles[context].y}deg) rotateZ(${diceAngles[context].z}deg)`;
+    }
+
+    const vaultModal = document.getElementById("avatar-vault-modal");
+    function openAvatarVault(context) {
+      activeVaultContext = context;
+      renderVaultGrid();
+      vaultModal.classList.add("open");
+    }
+
+    function closeAvatarVault() {
+      vaultModal.classList.remove("open");
+    }
+
+    function renderVaultGrid() {
+      const container = document.getElementById("vault-avatar-grid");
+      container.innerHTML = "";
+
+      const saved = getSavedLocalUser();
+      const currentActive = activeVaultContext === "signup"
+        ? selectedSignUpAvatar
+        : ((firebaseApi && firebaseApi.auth.currentUser && firebaseApi.auth.currentUser.photoURL) || (saved && saved.avatar) || "avatar-1");
+
+      FIFTY_AVATARS.forEach(av => {
+        if (activeVaultFilter === "sheet1" && av.sheetGroup !== "sheet1") return;
+        if (activeVaultFilter === "sheet2" && av.sheetGroup !== "sheet2") return;
+
+        const cell = document.createElement("div");
+        cell.className = "avatar-cell" + (currentActive === av.id ? " selected" : "");
+
+        const sprite = document.createElement("div");
+        sprite.className = "cell-sprite";
+        applySpriteToElement(sprite, av.id);
+
+        const num = document.createElement("span");
+        num.className = "cell-num";
+        num.textContent = `#${av.number}`;
+
+        cell.appendChild(sprite);
+        cell.appendChild(num);
+
+        cell.addEventListener("click", async () => {
+          if (activeVaultContext === "signup") {
+            document.getElementById("photo").value = "";
+            updateSignUpBigCircle(av.id);
+            showToast(`Selected ${av.name}!`);
+          } else {
+            await updateLoggedInUserAvatar(av.id);
+          }
+          closeAvatarVault();
+        });
+
+        container.appendChild(cell);
+      });
+    }
+
+    function refreshAllDisplays() {
+      if (selectedSignUpAvatar) {
+        updateSignUpBigCircle(selectedSignUpAvatar);
+      }
+      const saved = getSavedLocalUser();
+      if (saved && saved.avatar) {
+        applySpriteToElement(document.getElementById("profile-big-avatar-img"), saved.avatar);
+      }
+      if (vaultModal.classList.contains("open")) {
+        renderVaultGrid();
+      }
+    }
+
+    document.getElementById("signup-big-avatar-btn").addEventListener("click", () => {
+      openAvatarVault("signup");
+    });
+
+    document.getElementById("profile-big-avatar-btn").addEventListener("click", () => {
+      openAvatarVault("profile");
+    });
+
+    document.getElementById("close-vault-btn").addEventListener("click", closeAvatarVault);
+    vaultModal.addEventListener("click", (e) => {
+      if (e.target === vaultModal) closeAvatarVault();
+    });
+
+    document.getElementById("signup-dice-btn").addEventListener("click", () => {
+      spin3DDice("signup");
+      const randId = `avatar-${Math.floor(Math.random() * 50) + 1}`;
+      document.getElementById("photo").value = "";
+      updateSignUpBigCircle(randId);
+    });
+
+    document.getElementById("profile-dice-btn").addEventListener("click", async () => {
+      spin3DDice("profile");
+      const randId = `avatar-${Math.floor(Math.random() * 50) + 1}`;
+      await updateLoggedInUserAvatar(randId);
+    });
+
+    document.getElementById("modal-roll-btn").addEventListener("click", async () => {
+      const randId = `avatar-${Math.floor(Math.random() * 50) + 1}`;
+      spin3DDice(activeVaultContext);
+      if (activeVaultContext === "signup") {
+        document.getElementById("photo").value = "";
+        updateSignUpBigCircle(randId);
+      } else {
+        await updateLoggedInUserAvatar(randId);
+      }
+      renderVaultGrid();
+    });
+
+    document.querySelectorAll(".filter-chip[data-filter]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-chip[data-filter]").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeVaultFilter = btn.getAttribute("data-filter");
+        renderVaultGrid();
+      });
+    });
+
+    const tabSignIn = document.getElementById("tab-signin");
+    const tabSignUp = document.getElementById("tab-signup");
+    const tabIndicator = document.getElementById("tab-indicator");
+    const signupFields = document.getElementById("signup-fields");
+    const submitBtn = document.getElementById("submit-btn");
+    const authForm = document.getElementById("auth-form");
+    const nameInput = document.getElementById("name");
+    const photoInput = document.getElementById("photo");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => toast.classList.remove("show"), 3200);
+    }
+
+    function getSavedLocalUser() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY_USER);
+        return raw ? JSON.parse(raw) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function syncUserWithMainPortal(userObj, overrideAvatar) {
+      if (!userObj) {
+        localStorage.removeItem(STORAGE_KEY_USER);
+        return;
+      }
+      const payload = {
+        name: userObj.displayName || userObj.name || "Explorer",
+        email: userObj.email || "",
+        avatar: overrideAvatar || userObj.photoURL || userObj.avatar || "avatar-1"
+      };
+      localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(payload));
+    }
+
+    async function updateLoggedInUserAvatar(avatarId) {
+      try {
+        if (firebaseApi && firebaseApi.auth.currentUser) {
+          await firebaseApi.updateProfile(firebaseApi.auth.currentUser, { photoURL: avatarId });
+          syncUserWithMainPortal(firebaseApi.auth.currentUser, avatarId);
+        } else {
+          const localUser = getSavedLocalUser() || { name: "Explorer", email: "traveller@indiantourism.in" };
+          localUser.avatar = avatarId;
+          syncUserWithMainPortal(localUser, avatarId);
+        }
+        applySpriteToElement(document.getElementById("profile-big-avatar-img"), avatarId);
+        const match = FIFTY_AVATARS.find(a => a.id === avatarId);
+        showToast(`Switched to ${match ? match.name : "new avatar"}!`);
+      } catch (err) {
+        showToast("Could not update avatar: " + err.message);
+      }
+    }
+
+    function renderProfile(user) {
+      const authSec = document.getElementById("auth-section");
+      const profSec = document.getElementById("profile-section");
+
+      if (user) {
+        authSec.classList.replace("active-view", "hidden-view");
+        profSec.classList.replace("hidden-view", "active-view");
+
+        const displayName = user.displayName || user.name || "Explorer";
+        const avatarRef = user.photoURL || user.avatar || "avatar-1";
+
+        document.getElementById("user-name").textContent = displayName;
+        document.getElementById("user-email").textContent = user.email || "";
+
+        applySpriteToElement(document.getElementById("profile-big-avatar-img"), avatarRef);
+        syncUserWithMainPortal(user, avatarRef);
+      } else {
+        profSec.classList.replace("active-view", "hidden-view");
+        authSec.classList.replace("hidden-view", "active-view");
+        authForm.reset();
+        updateSignUpBigCircle(null);
+      }
+    }
+
+    tabSignIn.addEventListener("click", () => {
+      isSignUpMode = false;
+      tabSignIn.classList.add("active");
+      tabSignUp.classList.remove("active");
+      tabIndicator.style.transform = "translateX(0%)";
+      signupFields.classList.remove("show");
+      submitBtn.textContent = "Sign In";
+    });
+
+    tabSignUp.addEventListener("click", () => {
+      isSignUpMode = true;
+      tabSignUp.classList.add("active");
+      tabSignIn.classList.remove("active");
+      tabIndicator.style.transform = "translateX(100%)";
+      signupFields.classList.add("show");
+      submitBtn.textContent = "Create Account";
+    });
+
+    photoInput.addEventListener("input", () => {
+      const customUrl = photoInput.value.trim();
+      if (customUrl) {
+        updateSignUpBigCircle(customUrl);
+      } else {
+        updateSignUpBigCircle(null);
+      }
+    });
+
+    authForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = "Please wait...";
+      submitBtn.disabled = true;
+
+      const email = emailInput.value.trim();
+      const pass = passwordInput.value;
+      const chosenPhoto = photoInput.value.trim() || selectedSignUpAvatar || "avatar-1";
+      const chosenName = nameInput.value.trim() || email.split("@")[0] || "Explorer";
+
+      try {
+        if (firebaseApi) {
+          if (isSignUpMode) {
+            const userCredential = await firebaseApi.createUserWithEmailAndPassword(firebaseApi.auth, email, pass);
+            await firebaseApi.updateProfile(userCredential.user, {
+              displayName: chosenName,
+              photoURL: chosenPhoto
+            });
+            renderProfile({ displayName: chosenName, email: email, photoURL: chosenPhoto });
+            showToast("Account created!");
+          } else {
+            const userCredential = await firebaseApi.signInWithEmailAndPassword(firebaseApi.auth, email, pass);
+            renderProfile(userCredential.user);
+            showToast("Signed in successfully!");
+          }
+        } else {
+          const localUser = {
+            name: isSignUpMode ? chosenName : ((getSavedLocalUser() && getSavedLocalUser().name) || email.split("@")[0]),
+            email: email,
+            avatar: isSignUpMode ? chosenPhoto : ((getSavedLocalUser() && getSavedLocalUser().avatar) || "avatar-1")
+          };
+          renderProfile(localUser);
+          showToast(isSignUpMode ? "Account created!" : "Signed in!");
+        }
+      } catch (error) {
+        showToast(error.message ? error.message.replace("Firebase: ", "") : "Authentication failed");
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+    });
+
+    document.getElementById("google-btn").addEventListener("click", async () => {
+      if (!firebaseApi || window.location.protocol === "file:") {
+        renderProfile({ name: "Google Traveller", email: "traveller@gmail.com", avatar: selectedSignUpAvatar || "avatar-1" });
+        showToast("Signed in with Google!");
+        return;
+      }
+      try {
+        await firebaseApi.signInWithPopup(firebaseApi.auth, firebaseApi.googleProvider);
+        showToast("Signed in with Google!");
+      } catch (error) {
+        showToast(error.message.replace("Firebase: ", ""));
+      }
+    });
+
+    document.getElementById("signout-btn").addEventListener("click", async () => {
+      if (firebaseApi && firebaseApi.auth.currentUser) {
+        await firebaseApi.signOut(firebaseApi.auth);
+      }
+      syncUserWithMainPortal(null);
+      renderProfile(null);
+      showToast("Signed out safely.");
+    });
+
+    probeSpriteSheets();
+    const existingLocalUser = getSavedLocalUser();
+    if (existingLocalUser) {
+      renderProfile(existingLocalUser);
+    }
+
+    (async () => {
+      try {
+        const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js");
+        const {
+          getAuth,
+          createUserWithEmailAndPassword,
+          signInWithEmailAndPassword,
+          signOut,
+          updateProfile,
+          onAuthStateChanged,
+          GoogleAuthProvider,
+          signInWithPopup
+        } = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js");
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBrG1vADrmcP69-W3xiqqZwvlrOQzrCDlI",
+          authDomain: "indian-turisam.firebaseapp.com",
+          projectId: "indian-turisam",
+          storageBucket: "indian-turisam.firebasestorage.app",
+          messagingSenderId: "255922378560",
+          appId: "1:255922378560:web:c9499ca98ea8549db10ca5",
+          measurementId: "G-MLQHZQ07P9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        firebaseApi = {
+          auth,
+          googleProvider,
+          createUserWithEmailAndPassword,
+          signInWithEmailAndPassword,
+          signOut,
+          updateProfile,
+          signInWithPopup
+        };
+
+        onAuthStateChanged(auth, (user) => {
+          if (user) renderProfile(user);
+        });
+      } catch (err) {
+        console.warn("Running in local mode:", err);
+      }
+    })();
+  </script>
+</body>
+</html>
